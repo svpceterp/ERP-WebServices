@@ -10,7 +10,7 @@ using System.Data;
 /// <summary>
 /// Summary description for UserRoleClass
 /// </summary>
-public class UserModuleRoleClass:PersonalClass
+public class UserModuleRoleClass:StudentPastClass
 {
     public string RoleCode  { get; set; }
    

@@ -15,26 +15,27 @@ using System.Web.Services;
 public class WS_Students : System.Web.Services.WebService
 {
 
-    StudentClass s = new StudentClass();
+    
 
     [WebMethod]
-    public MessageClass UpdateStudentDetails(StudentClass sclr, string action = "Insert")
+    public MessageClass UpdateStudentDetails(PersonalClass pc, string action = "Insert")
     {
         MessageClass rm = new MessageClass();
 
-       // rm = s.UpdateStudentDetails(sclr, action);
+        rm = pc.UpdatePersonalDetails(action);
 
         return rm;
 
     }
 
-    [WebMethod(MessageName = "WithOutParametter")]
-    public List<StudentClass> GetStudentDetails(string UID="ALL")
+    [WebMethod]
+    public List<PersonalClass> GetPersonalDetails(string UID="ALL",string EmailID="ALL",string Name="ALL")
     {
-        List<StudentClass> studentList = new List<StudentClass>();
-      //studentList=s.GetStudentDetails("ALL", 0);
+        PersonalClass pc = new PersonalClass();
+        List<PersonalClass> personList = new List<PersonalClass>();
+      personList=pc.GetPersonalDetails(UID,EmailID,Name);
 
-        return studentList;
+        return personList;
 
     }
    
