@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ERPNameSpace;
-using ERPConnection;
+using ERPLocalConnection;
 using System.Data;
 using System.Data.SqlClient;
 

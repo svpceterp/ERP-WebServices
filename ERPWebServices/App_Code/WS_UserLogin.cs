@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using ERPConnection;
+using ERPLocalConnection;
 using ERPNameSpace;
 /// <summary>
 /// Summary description for WS_UserLogin
@@ -30,6 +30,17 @@ public class WS_UserLogin : System.Web.Services.WebService
             
         return user;
     }
+
+    [WebMethod]
+    public  MessageClass ChangePassword(string Uname,string OldPassword,string NewPassword)
+    {
+        MessageClass rm = new MessageClass();
+        LoginClass Login = new LoginClass(Uname,OldPassword,NewPassword);
+        rm = Login.ChangePassword();
+
+        return rm;
+    }
+
     [WebMethod]
     public string GetModuleRole(string UserName, string ModuleCode="ERP")
     {

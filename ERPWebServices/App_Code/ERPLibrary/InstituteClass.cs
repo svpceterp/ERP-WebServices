@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+using ERPLocalConnection;
 /// <summary>
 /// Summary description for DepartmentClass
 /// </summary>

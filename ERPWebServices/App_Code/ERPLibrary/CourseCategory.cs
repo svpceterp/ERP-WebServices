@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+
 using System.Data;
 using System.Data.SqlClient;
+using ERPLocalConnection;
 
 /// <summary>
 /// Summary description for SemesterClass

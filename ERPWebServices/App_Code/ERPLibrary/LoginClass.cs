@@ -1,4 +1,4 @@
-﻿using ERPConnection;
+﻿using ERPLocalConnection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +14,13 @@ public class LoginClass
 {
     string UserName;
     string Password;
-    public LoginClass(string UName, string Pwd)
+    string NewPassword;
+    public LoginClass()
+    {
+     
+
+    }
+    public LoginClass(string UName, string Pwd,string NewPwd=null)
     {
         UserName = UName;
         Password = Pwd;
@@ -89,4 +95,50 @@ public class LoginClass
         return User;
 
     }
+
+    public MessageClass ChangePassword()
+    {
+        
+
+        DataTable dt = new DataTable();
+        MessageClass rm = new MessageClass();
+        try
+        {
+            ERPConnectionClass erpconn = new ERPConnectionClass();
+
+            using (SqlConnection conn = erpconn.OpenConnection())
+            {
+                SqlCommand sqlComm = new SqlCommand("Proc_changepassword", conn);
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@username", UserName);
+                sqlComm.Parameters.AddWithValue("@OldPassword", Password);
+                sqlComm.Parameters.AddWithValue("@NewPassword", NewPassword);
+                sqlComm.Parameters.AddWithValue("@action", "Change");
+
+
+                sqlComm.Parameters.Add("@rvalue", SqlDbType.Char, 500);
+                sqlComm.Parameters["@rvalue"].Direction = ParameterDirection.Output;
+                sqlComm.ExecuteNonQuery();
+               rm.Message = (string)sqlComm.Parameters["@rvalue"].Value;
+                rm.Status = "success";
+
+            }
+
+          
+
+
+        }
+        catch (Exception er)
+        {
+
+           rm.Status = "failed";
+            rm.ErrorMessage = er.Message.ToString().Trim();
+
+        }
+
+
+        return rm;
+
+    }
+
 }
