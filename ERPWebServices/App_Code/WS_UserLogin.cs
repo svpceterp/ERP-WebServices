@@ -48,7 +48,6 @@ public class WS_UserLogin : System.Web.Services.WebService
         LoginClass Login = new LoginClass(UserName, ModuleCode);
         string MRole= UserModuleRoleClass.GetUserModuleRole(UserName,ModuleCode);
 
-
         return MRole;
     }
 }

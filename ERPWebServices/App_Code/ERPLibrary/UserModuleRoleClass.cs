@@ -12,9 +12,9 @@ using System.Data;
 /// </summary>
 public class UserModuleRoleClass:StudentPastClass
 {
-    public string RoleCode  { get; set; }
+    public string ModuleRoleCode  { get; set; }
    
-    public string RoleTitle { get; set; }
+    public string ModuleRoleTitle { get; set; }
     public string ModuleCode { get; set; }
     public string ModuleName { get; set; }
 

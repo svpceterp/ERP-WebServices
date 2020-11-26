@@ -16,9 +16,9 @@ namespace ERPNameSpace
     {
         public string Password { get; set; }
 
-        public string urole { get; set; }
+        public string UserRole { get; set; }
 
-        
+        public string ProfEmailID { get; set; }
 
     }
 

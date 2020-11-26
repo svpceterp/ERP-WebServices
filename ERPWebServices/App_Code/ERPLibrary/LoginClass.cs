@@ -12,6 +12,7 @@ public class LoginClass
     string UserName;
     string Password;
     string NewPassword;
+
     public LoginClass()
     {
      
@@ -54,11 +55,16 @@ public class LoginClass
                 User.FirstName = dr["Firstname"].ToString();
                 User.MiddleName = dr["middlename"].ToString();
                 User.LastName = dr["lastname"].ToString();
-                User.urole = dr["urole"].ToString();
+                User.UserRole = dr["urole"].ToString();
                 User.ModuleCode = "ERP";
                 User.ModuleName = "ERP Home";
+                User.ModuleRoleCode = "Guest";
+                User.ModuleRoleTitle = "Guest User";
+
                 User.MobileNo = dr["mobileno"].ToString();
                 User.EmailID = dr["emailid"].ToString();
+                User.ProfEmailID = dr["profemailid"].ToString();
+               
                 User.DOB =Convert.ToDateTime(dr["Dob"].ToString()).ToString("dd MMM yyyy");
                 User.CategoryCast = dr["categorycast"].ToString();
                 User.Religion = dr["Religion"].ToString();
@@ -69,6 +75,7 @@ public class LoginClass
                 User.PermanantAddress = dr["PermanantAddress"].ToString();
                 User.Status = "success";
                 User.ErrorMessage = null;
+               
             }
             else
             {
