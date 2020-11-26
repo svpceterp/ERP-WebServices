@@ -3,34 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebServices(1)", ".", "{9B12A901-4547-430E-94C3-139901440253}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebServices", ".", "{9B12A901-4547-430E-94C3-139901440253}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50547"
-		Debug.AspNetCompiler.PhysicalPath = "..\WebServices\"
+		Debug.AspNetCompiler.PhysicalPath = "..\ERPWebServices\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50547\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_50547"
-		Release.AspNetCompiler.PhysicalPath = "..\WebServices\"
+		Release.AspNetCompiler.PhysicalPath = "..\ERPWebServices\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50547\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50547"
-		SlnRelativePath = "..\WebServices\"
+		SlnRelativePath = "..\ERPWebServices\"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPConnection", "..\..\..\..\..\ERP System\Development\Connection Library\ERPConnection\ERPConnection\ERPConnection.csproj", "{E4901BD5-CE2D-4150-AD0B-9519B9CF8B8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9B12A901-4547-430E-94C3-139901440253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B12A901-4547-430E-94C3-139901440253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B12A901-4547-430E-94C3-139901440253}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B12A901-4547-430E-94C3-139901440253}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{E4901BD5-CE2D-4150-AD0B-9519B9CF8B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4901BD5-CE2D-4150-AD0B-9519B9CF8B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4901BD5-CE2D-4150-AD0B-9519B9CF8B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4901BD5-CE2D-4150-AD0B-9519B9CF8B8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

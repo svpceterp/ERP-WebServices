@@ -5,7 +5,7 @@ using System.Web;
 
 using System.Data;
 using System.Data.SqlClient;
-using ERPLocalConnection;
+using ERPConnection;
 
 /// <summary>
 /// Summary description for SemesterClass

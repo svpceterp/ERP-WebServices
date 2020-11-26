@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPLocalConnection;
+using ERPConnection;
 using System.Data;
 using System.Data.SqlClient;
 

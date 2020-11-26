@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using ERPLocalConnection;
+using ERPConnection;
 using ERPNameSpace;
 /// <summary>
 /// Summary description for WS_UserLogin

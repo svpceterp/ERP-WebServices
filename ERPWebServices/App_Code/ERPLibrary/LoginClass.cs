@@ -1,10 +1,7 @@
-﻿using ERPLocalConnection;
+﻿using ERPConnection;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using ERPNameSpace;
 
 /// <summary>
@@ -62,7 +59,7 @@ public class LoginClass
                 User.ModuleName = "ERP Home";
                 User.MobileNo = dr["mobileno"].ToString();
                 User.EmailID = dr["emailid"].ToString();
-                User.DOB = dr["Dob"].ToString();
+                User.DOB =Convert.ToDateTime(dr["Dob"].ToString()).ToString("dd MMM yyyy");
                 User.CategoryCast = dr["categorycast"].ToString();
                 User.Religion = dr["Religion"].ToString();
                 User.Gender = dr["Gender"].ToString();

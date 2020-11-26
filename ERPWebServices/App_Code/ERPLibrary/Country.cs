@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ERPLocalConnection;
+using ERPConnection;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
