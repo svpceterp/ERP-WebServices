@@ -79,7 +79,7 @@ public class LoginClass
             }
             else
             {
-                User = null;
+                User = new UserClass();
                 User.Status = "failed";
                 User.ErrorMessage = "Invalid User Account.";
             }
