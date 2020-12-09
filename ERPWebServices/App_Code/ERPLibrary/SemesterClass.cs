@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+
 using System.Data;
 using System.Data.SqlClient;
 
@@ -37,13 +37,13 @@ namespace ERPNameSpace
 
         public List<SemesterClass> GetSemester()
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
 
             List<SemesterClass> semList = new List<SemesterClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetSemester", conn);
                     sqlComm.Parameters.AddWithValue("@sem_id", Sem_ID);

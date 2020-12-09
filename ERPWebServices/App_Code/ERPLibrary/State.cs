@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -39,13 +39,13 @@ namespace ERPNameSpace
 
         public List<StateClass> GetState()
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+       
 
             List<StateClass> stateList = new List<StateClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetState", conn);
                     sqlComm.Parameters.AddWithValue("@state_id", StateID);
@@ -83,13 +83,13 @@ namespace ERPNameSpace
         }
         public StateClass GetState(string StateName)
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
 
             StateClass State = new StateClass();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     string sql = "select * from tbl_state where stateName=@StateName";
                     SqlCommand sqlComm = new SqlCommand("Proc_GetState", conn);

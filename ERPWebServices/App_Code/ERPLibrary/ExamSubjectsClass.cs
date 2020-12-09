@@ -1,4 +1,4 @@
-﻿using ERPConnection;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -127,13 +127,13 @@ namespace ERPNameSpace
         {
             List<ExamSubjectsClass>exsubList = new List<ExamSubjectsClass>();
 
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
 
             DataTable ds = new DataTable();
 
             try { 
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetExamSubject]", conn);
                 sqlComm.Parameters.AddWithValue("@Exam_ID", ExamID);
@@ -186,11 +186,11 @@ namespace ERPNameSpace
         public MessageClass UpdateExamSubject(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
 
             try
             {
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateExamSubject", con);

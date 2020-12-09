@@ -5,7 +5,7 @@ using System.Web;
 
 using System.Data;
 using System.Data.SqlClient;
-using ERPConnection;
+
 
 /// <summary>
 /// Summary description for SemesterClass
@@ -53,13 +53,13 @@ namespace ERPNameSpace
 
         public List<CourseCategoryClass> GetCourseCategory()
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
 
             List<CourseCategoryClass> CatList = new List<CourseCategoryClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetCourseCategory", conn);
                     sqlComm.Parameters.AddWithValue("@CourseCat_ID", CatID);
@@ -97,11 +97,11 @@ namespace ERPNameSpace
         public MessageClass UpdateCourseCategory(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
             try
             {
 
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateCourseCategory", con);

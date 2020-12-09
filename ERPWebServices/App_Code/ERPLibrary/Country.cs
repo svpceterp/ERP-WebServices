@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ERPConnection;
+
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -37,13 +37,13 @@ namespace ERPNameSpace
 
         public List<CountryClass> GetCountry()
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
 
             List<CountryClass> countryList = new List<CountryClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);
                     sqlComm.Parameters.AddWithValue("@sem_id", CountryID);
@@ -82,12 +82,12 @@ namespace ERPNameSpace
         }
         public CountryClass GetCountry(string CountryName)
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+           
 
             CountryClass country = new CountryClass();
             DataTable ds = new DataTable();
             try { 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 string sql = "select * from tbl_country where countryName=@CountryName";
                 SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);

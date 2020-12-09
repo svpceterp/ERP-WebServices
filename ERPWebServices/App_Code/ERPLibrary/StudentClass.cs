@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPNameSpace;
-using ERPConnection;
+
+
 using System.Data;
 using System.Data.SqlClient;
+using ERPNameSpace;
 
 /// <summary>
 /// Summary description for StudentClass
@@ -21,13 +22,13 @@ public class StudentClass:UserModuleRoleClass
 
     public List<StudentClass> GetStudentDetails(string Uid,string ProfEMail,string Name)
     {
-        ERPConnectionClass erpconn = new ERPConnectionClass();
+       
 
         List<StudentClass> stateList = new List<StudentClass>();
         DataTable ds = new DataTable();
         try
         {
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetStudentDetails", conn);
 
@@ -130,11 +131,11 @@ public class StudentClass:UserModuleRoleClass
     {
 
         MessageClass rm = new MessageClass();
-        ERPConnectionClass erpconn = new ERPConnectionClass();
+      
 
         try
         {
-            using (SqlConnection con = erpconn.OpenConnection())
+            using (SqlConnection con = ConnectionDB.OpenConnection())
             {
 
                 SqlCommand cmd = new SqlCommand("Proc_UpdatepersonalDetails", con);

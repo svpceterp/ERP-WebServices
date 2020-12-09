@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+
 /// <summary>
 /// Summary description for DepartmentClass
 /// </summary>
@@ -40,7 +40,7 @@ namespace ERPNameSpace
         public DateTime DeptEndDate { get; set; }
        
 
-        ERPConnectionClass erpconn = new ERPConnectionClass();
+        
 
         public List<DepartmentClass> GetDepartment()
         {
@@ -49,7 +49,7 @@ namespace ERPNameSpace
 
             DataTable ds = new DataTable();
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetDepartment", conn);
                 sqlComm.Parameters.AddWithValue("@dept_id", DeptID);
@@ -82,11 +82,11 @@ namespace ERPNameSpace
         public MessageClass UpdateDepartment(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
             try
             {
 
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateDepartment", con);

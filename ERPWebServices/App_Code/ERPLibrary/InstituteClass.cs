@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using ERPConnection;
+
 /// <summary>
 /// Summary description for DepartmentClass
 /// </summary>
@@ -38,7 +38,7 @@ namespace ERPNameSpace
         public string InstPinCode { get; set; }
         public string ErrorMessage { get; set; }
 
-        ERPConnectionClass erpconn = new ERPConnectionClass();
+        
 
         public List<InstituteClass> GetInstitute()
         {
@@ -47,7 +47,7 @@ namespace ERPNameSpace
 
             DataTable ds = new DataTable();
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetInstitute", conn);
                 sqlComm.Parameters.AddWithValue("@Inst_id", InstID);
@@ -86,11 +86,11 @@ namespace ERPNameSpace
         public MessageClass UpdateInstitute(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
             try
             {
 
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateInstitute", con);

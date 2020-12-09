@@ -1,11 +1,11 @@
-﻿using ERPConnection;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using ERPNameSpace;
+
 
 /// <summary>
 /// Summary description for SubjectSchemeClass
@@ -91,20 +91,20 @@ namespace ERPNameSpace
         public int SubjectTotalMaxMarks{ get; set; }
         public decimal SubjectESEDuration{ get; set; }
         public string SubjectCompulsory { get; set; }
-        public string ErrorMessage { get; set; }
+     
 
         public List<SubjectSchemeClass> GetSubjectScheme()
         {
             List<SubjectSchemeClass> SubjectList = new List<SubjectSchemeClass>();
 
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+           
 
             DataTable ds = new DataTable();
 
             try
             {
 
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetSubjectScheme]", conn);
                     sqlComm.Parameters.AddWithValue("@Subject_ID", Subject_ID);
@@ -172,11 +172,11 @@ namespace ERPNameSpace
         public MessageClass UpdateSubjectScheme(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
 
             try
             {
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateSubjectScheme", con);
@@ -220,10 +220,10 @@ namespace ERPNameSpace
             string subjectName = "";
             try
             {
-                ERPConnectionClass erpconn = new ERPConnectionClass();
+             
                 string sql = "select subjectTitle from subjectscheme where subject_id=" + subjectID;
+                subjectName = ConnectionDB.RunSQL(sql);
 
-                subjectName = erpconn.ExecuteSingleColumnSelectCommand(sql);
             }
             catch
             {

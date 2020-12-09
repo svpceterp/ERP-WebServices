@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERPNameSpace;
-using ERPConnection;
+
+
 using System.Data.SqlClient;
 using System.Data;
 
@@ -54,13 +54,13 @@ namespace ERPNameSpace
 
         public List<PersonalClass> GetPersonalDetails(string Uid,string EmailID,string Name)
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
 
             List<PersonalClass> stateList = new List<PersonalClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetPersonalDetails", conn);
 
@@ -141,11 +141,11 @@ namespace ERPNameSpace
         {
 
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+            
 
             try
             {
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdatepersonalDetails", con);
