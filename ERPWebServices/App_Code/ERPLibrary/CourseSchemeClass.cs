@@ -14,30 +14,10 @@ using System.Web;
 namespace ERPNameSpace
 {
 
-    public class SubjectSchemeClass:DepartmentClass
+    public class CourseSchemeClass:CourseCategoryClass
     {
-        private int Subject_ID;
-        private int CourseCat_ID;
-        private int Dept_ID;
-        private int Sem_ID;
-
-        bool b = false;
-        int x = 0;
-
-
-        public string SubjectID{ get { return Subject_ID.ToString(); } set {
-
-                b = int.TryParse(value, out x);
-                if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else
-                {
-                    Subject_ID = x;
-                }
-                
-            } }
+       
+        public string CourseID { get; set; }
         public string CourseCatID
         {
             get { return CourseCat_ID.ToString(); }
@@ -93,9 +73,9 @@ namespace ERPNameSpace
         public string SubjectCompulsory { get; set; }
      
 
-        public List<SubjectSchemeClass> GetSubjectScheme()
+        public List<CourseSchemeClass> GetSubjectScheme()
         {
-            List<SubjectSchemeClass> SubjectList = new List<SubjectSchemeClass>();
+            List<CourseSchemeClass> SubjectList = new List<CourseSchemeClass>();
 
            
 
@@ -133,7 +113,7 @@ namespace ERPNameSpace
                     b = int.TryParse(dr["SubjectTotalMaxMarks"].ToString(), out tmm);
                     b = int.TryParse(dr["SubjectESEDuration"].ToString(), out dur);
 
-                    SubjectList.Add(new SubjectSchemeClass
+                    SubjectList.Add(new CourseSchemeClass
                     {
                         SubjectID = dr["Subject_ID"].ToString(),
                         CourseCatID = dr["CourseCat_ID"].ToString(),
@@ -161,7 +141,7 @@ namespace ERPNameSpace
                 }
             }
             catch(Exception er) {
-                SubjectList.Add(new SubjectSchemeClass {ErrorMessage=er.Message.ToString() });
+                SubjectList.Add(new CourseSchemeClass {ErrorMessage=er.Message.ToString() });
             }
 
             return SubjectList;

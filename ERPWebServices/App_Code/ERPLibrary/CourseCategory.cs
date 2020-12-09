@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 /// 
 namespace ERPNameSpace
 {
-    public class CourseCategoryClass:DepartmentClass
+    public class CourseCategoryClass:DepartmentProgramClass
     {
        private int CatID;
 
@@ -62,7 +62,7 @@ namespace ERPNameSpace
                 using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetCourseCategory", conn);
-                    sqlComm.Parameters.AddWithValue("@CourseCat_ID", CatID);
+                    sqlComm.Parameters.AddWithValue("@CourseCatID", CatID);
                     sqlComm.Parameters.AddWithValue("@dept_ID", DeptID);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;

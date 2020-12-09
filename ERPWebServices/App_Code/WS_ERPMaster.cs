@@ -77,30 +77,30 @@ public class WS_ERPMaster : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<CourseProgramClass> GetCourseProgram(string CourseID = "0")
+    public List<DepartmentProgramClass> GetDepartmentProgram(string ProgramID = "0")
     {
-        CourseProgramClass sClass = new CourseProgramClass();
-        List<CourseProgramClass> CourseList = new List<CourseProgramClass>();
+        DepartmentProgramClass sClass = new DepartmentProgramClass();
+        List<DepartmentProgramClass> CourseList = new List<DepartmentProgramClass>();
         try
         {
-            sClass.CourseID = String.IsNullOrEmpty(CourseID) ? "0" : CourseID;
+            sClass.ProgramID = String.IsNullOrEmpty(ProgramID) ? "0" : ProgramID;
 
-            CourseList = sClass.GetCourseProgram();
+            CourseList = sClass.GetDepartmentProgram();
         }
         catch (Exception er)
         {
-            CourseList.Add(new CourseProgramClass { ErrorMessage = er.Message.ToString() });
+            CourseList.Add(new DepartmentProgramClass { ErrorMessage = er.Message.ToString() });
         }
         return CourseList;
 
     }
 
     [WebMethod]
-    public List<SubjectSchemeClass> GetSubjectScheme(string SubjectID, string DeptID, string SemID, string CourseCatID)
+    public List<CourseSchemeClass> GetSubjectScheme(string SubjectID, string DeptID, string SemID, string CourseCatID)
     {
 
-        SubjectSchemeClass subClass = new SubjectSchemeClass();
-        List<SubjectSchemeClass> subList = new List<SubjectSchemeClass>();
+        CourseSchemeClass subClass = new CourseSchemeClass();
+        List<CourseSchemeClass> subList = new List<CourseSchemeClass>();
 
         try
         {
@@ -112,7 +112,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
         }
         catch (Exception er)
         {
-            subList.Add(new SubjectSchemeClass { ErrorMessage = er.Message.ToString() });
+            subList.Add(new CourseSchemeClass { ErrorMessage = er.Message.ToString() });
 
         }
         return subList;
@@ -160,7 +160,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public MessageClass UpdateSubjectScheme(SubjectSchemeClass subjectScheme, string action = "Insert")
+    public MessageClass UpdateSubjectScheme(CourseSchemeClass subjectScheme, string action = "Insert")
     {
         MessageClass rm = new MessageClass();
         rm = subjectScheme.UpdateSubjectScheme(action);
