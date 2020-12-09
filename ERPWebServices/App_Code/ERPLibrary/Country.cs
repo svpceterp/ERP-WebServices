@@ -12,7 +12,7 @@ using System.Globalization;
 /// 
 namespace ERPNameSpace
 {
-    public class CountryClass
+    public class CountryClass:MessageClass
     {
        private int _CountryID=0;
         private string _CountryCode;
@@ -33,89 +33,9 @@ namespace ERPNameSpace
         public string CountryCode { get; set; }
         public string CountryName { get; set; }
     
-        public string ErrorMessage { get; set; }
+        
 
-        public List<CountryClass> GetCountry()
-        {
-          
-
-            List<CountryClass> countryList = new List<CountryClass>();
-            DataTable ds = new DataTable();
-            try
-            {
-                using (SqlConnection conn = ConnectionDB.OpenConnection())
-                {
-                    SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);
-                    sqlComm.Parameters.AddWithValue("@sem_id", CountryID);
-
-
-                    sqlComm.CommandType = CommandType.StoredProcedure;
-
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = sqlComm;
-
-                    da.Fill(ds);
-                }
-
-                foreach (DataRow dr in ds.Rows)
-                {
-                    countryList.Add(new CountryClass
-                    {
-
-                        CountryID = dr["Country_id"].ToString(),
-                        CountryCode = dr["countrycode"].ToString(),
-                        CountryName = dr["countryname"].ToString()
-
-                    });
-
-
-                }
-           
-             }
-            catch (Exception er)
-            {
-                countryList.Add(new CountryClass { ErrorMessage = er.Message.ToString() });
-            }
-            return countryList;
-
-
-        }
-        public CountryClass GetCountry(string CountryName)
-        {
-           
-
-            CountryClass country = new CountryClass();
-            DataTable ds = new DataTable();
-            try { 
-            using (SqlConnection conn = ConnectionDB.OpenConnection())
-            {
-                string sql = "select * from tbl_country where countryName=@CountryName";
-                SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);
-                sqlComm.Parameters.AddWithValue("@CountryName", CountryName);
-                
-                sqlComm.CommandType = CommandType.StoredProcedure;
-
-                SqlDataAdapter da = new SqlDataAdapter();
-                da.SelectCommand = sqlComm;
-
-                da.Fill(ds);
-            }
-
-            foreach (DataRow dr in ds.Rows)
-            {
-                country.CountryID = dr["Country_id"].ToString();
-                    country.CountryCode = dr["countrycode"].ToString();
-                    country.CountryName = dr["countryname"].ToString();
-           }
-            }
-            catch (Exception er)
-            {
-                country.ErrorMessage = er.Message.ToString();
-            }
-            return country;
-
-
-        }
+      
         public List<CountryClass> GetCountryName()
         {
             List<string> List = new List<string>();

@@ -16,7 +16,7 @@ using System.Web.Services;
 public class WS_ERPMaster : System.Web.Services.WebService
 {
     [WebMethod]
-    public List<DepartmentClass> GetDepartment(string DeptID, string CourseID)
+    public List<DepartmentClass> GetDepartment(string DeptID)
     {
         MessageClass ec = new MessageClass();
         DepartmentClass dClass = new DepartmentClass();
@@ -25,7 +25,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
         try
         {
             dClass.DeptID = ((String.IsNullOrEmpty(DeptID)) ? "0" : DeptID);
-            dClass.CourseID = (String.IsNullOrEmpty(CourseID)) ? "0" : CourseID;
+        
 
             deptList = dClass.GetDepartment();
 

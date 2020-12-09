@@ -11,7 +11,7 @@ using System.Web;
 
 namespace ERPNameSpace
 {
-    public class DepartmentClass:CourseProgramClass
+    public class DepartmentClass:InstituteClass
     {
         private string _DeptID;
        
@@ -52,8 +52,8 @@ namespace ERPNameSpace
             using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetDepartment", conn);
-                sqlComm.Parameters.AddWithValue("@dept_id", DeptID);
-                sqlComm.Parameters.AddWithValue("@course_id", CourseID);
+                sqlComm.Parameters.AddWithValue("@deptid", DeptID);
+              
 
 
                 sqlComm.CommandType = CommandType.StoredProcedure;
@@ -68,10 +68,10 @@ namespace ERPNameSpace
             {
                 deptlist.Add(new DepartmentClass
                 {
-                    DeptID = dr["dept_id"].ToString(),
+                    DeptID = dr["deptid"].ToString(),
                     DeptCode = dr["deptcode"].ToString(),
-                    DeptName = dr["deptname"].ToString(),
-                    CourseID = dr["course_id"].ToString()
+                    DeptName = dr["deptname"].ToString()
+                   
                 });
 
             }
@@ -91,12 +91,11 @@ namespace ERPNameSpace
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateDepartment", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Dept_ID", DeptID);
+                    cmd.Parameters.AddWithValue("@DeptID", DeptID);
                     cmd.Parameters.AddWithValue("@DeptCode", DeptCode);
                     cmd.Parameters.AddWithValue("@DeptName",DeptName);
-                    cmd.Parameters.AddWithValue("@Course_ID", CourseID);
-                    cmd.Parameters.AddWithValue("@DeptStartDate", DeptStartDate);
-                    cmd.Parameters.AddWithValue("@DeptEndDate", DeptEndDate);
+                 
+                 
 
 
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);

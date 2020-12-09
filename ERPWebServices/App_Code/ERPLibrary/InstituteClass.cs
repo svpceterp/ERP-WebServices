@@ -11,7 +11,7 @@ using System.Web;
 
 namespace ERPNameSpace
 {
-    public class InstituteClass
+    public class InstituteClass:MessageClass
     {
       
        private bool b = new bool();
@@ -36,7 +36,7 @@ namespace ERPNameSpace
         public string InstState { get; set; }
         public string InstCountry { get; set; }
         public string InstPinCode { get; set; }
-        public string ErrorMessage { get; set; }
+       
 
         
 
@@ -50,7 +50,7 @@ namespace ERPNameSpace
             using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetInstitute", conn);
-                sqlComm.Parameters.AddWithValue("@Inst_id", InstID);
+                sqlComm.Parameters.AddWithValue("@Instid", InstID);
                
 
 
@@ -66,7 +66,7 @@ namespace ERPNameSpace
             {
                 Instlist.Add(new InstituteClass
                 {
-                    InstID = dr["inst_id"].ToString(),
+                    InstID = dr["instid"].ToString(),
                     InstCode = dr["instcode"].ToString(),
                     InstName = dr["instname"].ToString(),
                     InstStreet = dr["InstStreet"].ToString(),

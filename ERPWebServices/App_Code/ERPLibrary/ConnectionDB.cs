@@ -10,19 +10,23 @@ using ERPLocalConnection;
 /// </summary>
 public class ConnectionDB
 {
+ 
     public static SqlConnection OpenConnection()
     {
-        SqlConnection conn = new SqlConnection();
+       
         ERPConnectionClass erpconnection = new ERPConnectionClass();
-        conn = erpconnection.OpenConnection();
-        return conn;
+        erpconnection.OpenConnection("MSA\\DEV_MSA","TestERPDB_V2","DEV_sohail","tpdc123#");
+        
+        return erpconnection.conn;
     }
     public static string RunSQL(string sql)
     {
-        SqlConnection conn = new SqlConnection();
-        ERPConnectionClass erpconnection = new ERPConnectionClass();
-        string str= erpconnection.RunFindSQL(sql);
-        return str;
+        try
+        {
+            ERPConnectionClass erpclass = new ERPConnectionClass();
+            return erpclass.RunFindSQL(sql, OpenConnection());
+        }
+        catch { return "0"; }
     }
    
 }
