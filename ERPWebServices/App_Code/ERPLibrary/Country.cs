@@ -14,28 +14,10 @@ namespace ERPNameSpace
 {
     public class CountryClass:MessageClass
     {
-       private int _CountryID=0;
-        private string _CountryCode;
-        private string _CountryName;
-
-        bool b = false;
-        int x = 0; 
-
-        public string CountryID { get { return _CountryID.ToString(); }
-            set {
-                b = int.TryParse(value, out _CountryID);
-                if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-             
-            } }
+        public string CountryID { get; set; }
         public string CountryCode { get; set; }
         public string CountryName { get; set; }
-    
-        
-
-      
+         
         public List<CountryClass> GetCountryName()
         {
             List<string> List = new List<string>();
