@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using ERPConnection;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -11,31 +11,16 @@ using System.Globalization;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
     public class StateClass:CountryClass
     {
-       private int _StateID=0;
-        private string _StateCode;
-        private string _CountryCode;
-      
-
-        bool b = false;
-        int x = 0; 
-
-        public string StateID { get { return _StateID.ToString(); }
-            set {
-                b = int.TryParse(value, out _StateID);
-                if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-             
-            } }
+       public int StateID { get; set; }
         public string StateCode { get; set; }
         public string StateName { get; set; }
+        
 
-        public List<StateClass> GetStateName(string CCode="ALL")
+        public List<StateClass> GetState(string CountryCode="ALL")
         {
 
             List<StateClass> states = new List<StateClass>();
@@ -75,8 +60,8 @@ namespace ERPNameSpace
                 states.Add(new StateClass { StateCode = "WB", StateName = "West Bengal", CountryCode = "IND" });
 
 
-                if (!String.IsNullOrEmpty(CCode) && !CCode.Equals("ALL"))
-                    states.Find(x => x.CountryCode == CCode);
+                if (!String.IsNullOrEmpty(CountryCode) && !CountryCode.Equals("ALL"))
+                    states.Find(x => x.CountryCode == CountryCode);
             }
             catch(Exception er) {
                 states.Add(new StateClass { ErrorMessage=er.Message.ToString() });

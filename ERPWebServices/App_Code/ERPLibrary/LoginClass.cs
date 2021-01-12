@@ -1,9 +1,8 @@
-﻿
-using ERPNameSpace;
+﻿using ERPConnection;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-
+using ERP;
 
 /// <summary>
 /// Summary description for LoginClass
@@ -32,9 +31,9 @@ public class LoginClass
         DataTable dt = new DataTable();
         try
         {
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
           
-            using (SqlConnection conn = ConnectionDB.OpenConnection())
+            using (SqlConnection conn = erpconn.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_CheckLogin", conn);
                 sqlComm.CommandType = CommandType.StoredProcedure;
@@ -109,9 +108,9 @@ public class LoginClass
         MessageClass rm = new MessageClass();
         try
         {
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
-            using (SqlConnection conn = ConnectionDB.OpenConnection())
+            using (SqlConnection conn = erpconn.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_changepassword", conn);
                 sqlComm.CommandType = CommandType.StoredProcedure;

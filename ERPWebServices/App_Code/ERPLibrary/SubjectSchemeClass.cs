@@ -1,24 +1,84 @@
-﻿
+﻿using ERPConnection;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
+using ERP;
 
 /// <summary>
 /// Summary description for SubjectSchemeClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
 
-    public class CourseSchemeClass:CourseCategoryClass
+    public class SubjectSchemeClass:DepartmentClass
     {
-       
-        public int CourseID { get; set; }
-        public int SemID{get;set;}
+        private int Subject_ID;
+        private int CourseCat_ID;
+        private int Dept_ID;
+        private int Sem_ID;
+
+        bool b = false;
+        int x = 0;
+
+
+        public string SubjectID{ get { return Subject_ID.ToString(); } set {
+
+                b = int.TryParse(value, out x);
+                if (x < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    Subject_ID = x;
+                }
+                
+            } }
+        public string CourseCatID
+        {
+            get { return CourseCat_ID.ToString(); }
+            set
+            {
+
+                b = int.TryParse(value, out x);
+                if (x < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    CourseCat_ID = x;
+                }
+
+            }
+        }
+     
+        public string SemID
+        {
+            get { return Sem_ID.ToString(); }
+            set
+            {
+
+                b = int.TryParse(value, out x);
+                if (x < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    Sem_ID = x;
+                }
+
+            }
+        }
+        public string CourseCredit { get; set; }
+        public string CourseCategory{ get; set; }
+   
+      
         public string SemCode{ get; set; }
         public string SubjectCode{ get; set; }
         public string SubjectTitle{ get; set; }
@@ -31,26 +91,26 @@ namespace ERPNameSpace
         public int SubjectTotalMaxMarks{ get; set; }
         public decimal SubjectESEDuration{ get; set; }
         public string SubjectCompulsory { get; set; }
-     
+        public string ErrorMessage { get; set; }
 
-        public List<CourseSchemeClass> GetSubjectScheme()
+        public List<SubjectSchemeClass> GetSubjectScheme()
         {
-            List<CourseSchemeClass> SubjectList = new List<CourseSchemeClass>();
+            List<SubjectSchemeClass> SubjectList = new List<SubjectSchemeClass>();
 
-           
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             DataTable ds = new DataTable();
 
             try
             {
 
-                using (SqlConnection conn = ConnectionDB.OpenConnection())
+                using (SqlConnection conn = erpconn.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetSubjectScheme]", conn);
-                    sqlComm.Parameters.AddWithValue("@Subject_ID", CourseID);
-                    sqlComm.Parameters.AddWithValue("@CourseCat_ID", CourseCatID);
-                    sqlComm.Parameters.AddWithValue("@Dept_ID", DeptID);
-                    sqlComm.Parameters.AddWithValue("@Sem_ID", SemID);
+                    sqlComm.Parameters.AddWithValue("@Subject_ID", Subject_ID);
+                    sqlComm.Parameters.AddWithValue("@CourseCat_ID", CourseCat_ID);
+                    sqlComm.Parameters.AddWithValue("@Dept_ID", Dept_ID);
+                    sqlComm.Parameters.AddWithValue("@Sem_ID", Sem_ID);
 
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
@@ -73,16 +133,16 @@ namespace ERPNameSpace
                     b = int.TryParse(dr["SubjectTotalMaxMarks"].ToString(), out tmm);
                     b = int.TryParse(dr["SubjectESEDuration"].ToString(), out dur);
 
-                    SubjectList.Add(new CourseSchemeClass
+                    SubjectList.Add(new SubjectSchemeClass
                     {
-                        CourseID = int.Parse(dr["Subject_ID"].ToString()),
+                        SubjectID = dr["Subject_ID"].ToString(),
                         CourseCatID = dr["CourseCat_ID"].ToString(),
                         CourseCategory = dr["CourseCategory"].ToString(),
                         CourseCredit = dr["CourseCredit"].ToString(),
                         DeptID = dr["Dept_ID"].ToString(),
                         DeptCode = dr["DeptCode"].ToString(),
                         DeptName = dr["DeptName"].ToString(),
-                        SemID =int.Parse(dr["SemID"].ToString()),
+                        SemID = dr["Sem_ID"].ToString(),
                         SemCode = dr["SemCode"].ToString(),
                         SubjectCode = dr["SubjectCode"].ToString(),
                         SubjectTitle = dr["SubjectTitle"].ToString(),
@@ -101,7 +161,7 @@ namespace ERPNameSpace
                 }
             }
             catch(Exception er) {
-                SubjectList.Add(new CourseSchemeClass {ErrorMessage=er.Message.ToString() });
+                SubjectList.Add(new SubjectSchemeClass {ErrorMessage=er.Message.ToString() });
             }
 
             return SubjectList;
@@ -112,19 +172,19 @@ namespace ERPNameSpace
         public MessageClass UpdateSubjectScheme(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-          
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             try
             {
-                using (SqlConnection con = ConnectionDB.OpenConnection())
+                using (SqlConnection con = erpconn.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateSubjectScheme", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Subject_ID", CourseID);
-                    cmd.Parameters.AddWithValue("@Dept_ID", DeptID);
-                    cmd.Parameters.AddWithValue("@Sem_ID", SemID);
-                    cmd.Parameters.AddWithValue("@CourseCat_ID", CourseCatID);
+                    cmd.Parameters.AddWithValue("@Subject_ID", Subject_ID);
+                    cmd.Parameters.AddWithValue("@Dept_ID", Dept_ID);
+                    cmd.Parameters.AddWithValue("@Sem_ID", Sem_ID);
+                    cmd.Parameters.AddWithValue("@CourseCat_ID", CourseCat_ID);
 
                     cmd.Parameters.AddWithValue("@Subjectcode", SubjectCode);
                     cmd.Parameters.AddWithValue("@subjecttitle", SubjectTitle);
@@ -160,10 +220,10 @@ namespace ERPNameSpace
             string subjectName = "";
             try
             {
-             
+                ERPConnectionClass erpconn = new ERPConnectionClass();
                 string sql = "select subjectTitle from subjectscheme where subject_id=" + subjectID;
-                subjectName = ConnectionDB.RunSQL(sql);
 
+                subjectName = erpconn.ExecuteSingleColumnSelectCommand(sql);
             }
             catch
             {

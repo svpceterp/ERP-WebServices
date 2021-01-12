@@ -1,4 +1,4 @@
-﻿using ERPNameSpace;
+﻿using ERP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Web.Services;
 public class WS_ERPMaster : System.Web.Services.WebService
 {
     [WebMethod]
-    public List<DepartmentClass> GetDepartment(string DeptID)
+    public List<DepartmentClass> GetDepartment(string DeptID, string CourseID)
     {
         MessageClass ec = new MessageClass();
         DepartmentClass dClass = new DepartmentClass();
@@ -25,7 +25,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
         try
         {
             dClass.DeptID = ((String.IsNullOrEmpty(DeptID)) ? "0" : DeptID);
-        
+            dClass.CourseID = (String.IsNullOrEmpty(CourseID)) ? "0" : CourseID;
 
             deptList = dClass.GetDepartment();
 
@@ -77,30 +77,30 @@ public class WS_ERPMaster : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<DepartmentProgramClass> GetDepartmentProgram(string ProgramID = "0")
+    public List<CourseProgramClass> GetCourseProgram(string CourseID = "0")
     {
-        DepartmentProgramClass sClass = new DepartmentProgramClass();
-        List<DepartmentProgramClass> CourseList = new List<DepartmentProgramClass>();
+        CourseProgramClass sClass = new CourseProgramClass();
+        List<CourseProgramClass> CourseList = new List<CourseProgramClass>();
         try
         {
-            sClass.ProgramID = String.IsNullOrEmpty(ProgramID) ? "0" : ProgramID;
+            sClass.CourseID = String.IsNullOrEmpty(CourseID) ? "0" : CourseID;
 
-            CourseList = sClass.GetDepartmentProgram();
+            CourseList = sClass.GetCourseProgram();
         }
         catch (Exception er)
         {
-            CourseList.Add(new DepartmentProgramClass { ErrorMessage = er.Message.ToString() });
+            CourseList.Add(new CourseProgramClass { ErrorMessage = er.Message.ToString() });
         }
         return CourseList;
 
     }
 
     [WebMethod]
-    public List<CourseSchemeClass> GetSubjectScheme(string SubjectID, string DeptID, string SemID, string CourseCatID)
+    public List<SubjectSchemeClass> GetSubjectScheme(string SubjectID, string DeptID, string SemID, string CourseCatID)
     {
 
-        CourseSchemeClass subClass = new CourseSchemeClass();
-        List<CourseSchemeClass> subList = new List<CourseSchemeClass>();
+        SubjectSchemeClass subClass = new SubjectSchemeClass();
+        List<SubjectSchemeClass> subList = new List<SubjectSchemeClass>();
 
         try
         {
@@ -112,7 +112,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
         }
         catch (Exception er)
         {
-            subList.Add(new CourseSchemeClass { ErrorMessage = er.Message.ToString() });
+            subList.Add(new SubjectSchemeClass { ErrorMessage = er.Message.ToString() });
 
         }
         return subList;
@@ -160,7 +160,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public MessageClass UpdateSubjectScheme(CourseSchemeClass subjectScheme, string action = "Insert")
+    public MessageClass UpdateSubjectScheme(SubjectSchemeClass subjectScheme, string action = "Insert")
     {
         MessageClass rm = new MessageClass();
         rm = subjectScheme.UpdateSubjectScheme(action);

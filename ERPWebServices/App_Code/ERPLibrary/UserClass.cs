@@ -4,13 +4,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
+using ERP;
 
 /// <summary>
 /// Summary description for UserClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
     public class UserClass:UserModuleRoleClass
     {

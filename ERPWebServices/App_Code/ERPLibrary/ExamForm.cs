@@ -1,4 +1,4 @@
-﻿
+﻿using ERPConnection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +10,7 @@ using System.Web;
 /// Summary description for ExamScheduleClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
 
     public class ExamFormClass
@@ -107,12 +107,12 @@ namespace ERPNameSpace
         {
             List<ExamFormClass>exfrmList = new List<ExamFormClass>();
 
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = ConnectionDB.OpenConnection())
+                using (SqlConnection conn = erpconn.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetExamForm]", conn);
                     sqlComm.Parameters.AddWithValue("@ExamFormID", ExamFormID);
@@ -187,12 +187,12 @@ namespace ERPNameSpace
         public MessageClass UpdateExamForm(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             try
             {
 
-                using (SqlConnection con = ConnectionDB.OpenConnection())
+                using (SqlConnection con = erpconn.OpenConnection())
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand("Proc_UpdateExamForm", con);

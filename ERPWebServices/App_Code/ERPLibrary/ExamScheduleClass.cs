@@ -1,4 +1,4 @@
-﻿
+﻿using ERPConnection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +10,7 @@ using System.Web;
 /// Summary description for ExamScheduleClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
 
     public class ExamScheduleClass
@@ -63,12 +63,12 @@ namespace ERPNameSpace
         {
             List<ExamScheduleClass>examList = new List<ExamScheduleClass>();
 
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = ConnectionDB.OpenConnection())
+                using (SqlConnection conn = erpconn.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetExamSchedule]", conn);
                     sqlComm.Parameters.AddWithValue("@Exam_ID", Exam_ID);
@@ -127,10 +127,10 @@ namespace ERPNameSpace
         public MessageClass UpdateExamSchedule(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
 
             try { 
-            using (SqlConnection con = ConnectionDB.OpenConnection())
+            using (SqlConnection con = erpconn.OpenConnection())
             {
                
                 SqlCommand cmd = new SqlCommand("Proc_UpdateExamSchedule", con);
@@ -170,10 +170,10 @@ namespace ERPNameSpace
             string examName = "";
             try
             {
-                
+                ERPConnectionClass erpconn = new ERPConnectionClass();
                 string sql = "select examname from examschedule where exam_id=" + examID;
 
-                examName = ConnectionDB.RunSQL(sql);
+                examName = erpconn.ExecuteSingleColumnSelectCommand(sql);
             }
             catch {
                 examName = "No Exam Found";

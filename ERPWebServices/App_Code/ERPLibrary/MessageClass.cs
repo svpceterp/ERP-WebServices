@@ -6,15 +6,16 @@ using System.Web;
 /// <summary>
 /// Summary description for ErrorClass
 /// </summary>
-namespace ERPNameSpace
+namespace ERP
 {
    
 
-    public class MessageClass
+   public class MessageClass
     {
-        public string ID { get; set; }
-        public string Status { get; set; }
-        public string Message { get; set; }
+        public string ReurnID { get; set; }
+        public string SuccessMessage { get; set; }
         public string ErrorMessage { get; set; }
+        public string ErrorNo { get; set; }
+        public string Status { get; set; }
     }
 }

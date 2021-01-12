@@ -4,43 +4,20 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
+using ERPConnection;
 /// <summary>
 /// Summary description for DepartmentClass
 /// </summary>
 
-namespace ERPNameSpace
+namespace ERP
 {
     public class DepartmentClass:InstituteClass
     {
-        private string _DeptID;
+        public int DepartmentID { get; set;}
+        public string DepartmentCode { get; set; }
+        public string DepartmentName { get; set; }
        
-       private bool b = new bool();
-        private int x = 0;
-        public string DeptID { get { return _DeptID; }
-            set {
-               
-                 b = int.TryParse(value, out x);
-                if (x > 0)
-                {
-                    _DeptID = x.ToString();
-                }
-                else if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else
-                {   }
-
-            } }
-        public string DeptCode { get; set; }
-        public string DeptName { get; set; }
-       
-        public DateTime DeptStartDate { get; set; }
-        public DateTime DeptEndDate { get; set; }
-       
-
-        
+        ERPConnectionClass erpconn = new ERPConnectionClass();
 
         public List<DepartmentClass> GetDepartment()
         {
@@ -49,11 +26,11 @@ namespace ERPNameSpace
 
             DataTable ds = new DataTable();
 
-            using (SqlConnection conn = ConnectionDB.OpenConnection())
+            using (SqlConnection conn = erpconn.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetDepartment", conn);
-                sqlComm.Parameters.AddWithValue("@deptid", DeptID);
-              
+                sqlComm.Parameters.AddWithValue("@dept_id", DeptID);
+                sqlComm.Parameters.AddWithValue("@course_id", CourseID);
 
 
                 sqlComm.CommandType = CommandType.StoredProcedure;
@@ -68,10 +45,10 @@ namespace ERPNameSpace
             {
                 deptlist.Add(new DepartmentClass
                 {
-                    DeptID = dr["deptid"].ToString(),
+                    DeptID = dr["dept_id"].ToString(),
                     DeptCode = dr["deptcode"].ToString(),
-                    DeptName = dr["deptname"].ToString()
-                   
+                    DeptName = dr["deptname"].ToString(),
+                    CourseID = dr["course_id"].ToString()
                 });
 
             }
@@ -82,20 +59,21 @@ namespace ERPNameSpace
         public MessageClass UpdateDepartment(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            
+            ERPConnectionClass erpconn = new ERPConnectionClass();
             try
             {
 
-                using (SqlConnection con = ConnectionDB.OpenConnection())
+                using (SqlConnection con = erpconn.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateDepartment", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@DeptID", DeptID);
+                    cmd.Parameters.AddWithValue("@Dept_ID", DeptID);
                     cmd.Parameters.AddWithValue("@DeptCode", DeptCode);
                     cmd.Parameters.AddWithValue("@DeptName",DeptName);
-                 
-                 
+                    cmd.Parameters.AddWithValue("@Course_ID", CourseID);
+                    cmd.Parameters.AddWithValue("@DeptStartDate", DeptStartDate);
+                    cmd.Parameters.AddWithValue("@DeptEndDate", DeptEndDate);
 
 
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);

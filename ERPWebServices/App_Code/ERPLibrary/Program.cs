@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
     public class ProgramClass:DepartmentClass
     {

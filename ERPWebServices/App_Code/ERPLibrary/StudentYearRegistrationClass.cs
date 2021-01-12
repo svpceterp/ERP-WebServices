@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using ERP;
 /// <summary>
 /// Summary description for StudentYearRegistration
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
     public class StudentYearRegistrationClass
     {
