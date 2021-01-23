@@ -11,47 +11,50 @@ using System.Web;
 /// Summary description for SubjectSchemeClass
 /// </summary>
 /// 
-namespace ERPNameSpace
+namespace ERP
 {
 
     public class CourseSchemeClass:CourseCategoryClass
     {
+        public CourseSchemeClass()
+        {
+            CourseID = 0;
+            CourseCategoryID = 0;
+        }
+
        
         public int CourseID { get; set; }
-        public int SemID{get;set;}
-        public string SemCode{ get; set; }
-        public string SubjectCode{ get; set; }
-        public string SubjectTitle{ get; set; }
-        public int SubjectLHrPerWeek{ get; set; }
-        public int SubjectTHrPerWeek{ get; set; }
-        public int SubjectPHrPerWeek{ get; set; }
-        public int SubjectCredit{ get; set; }
-        public int SubjectCAMaxMarks{ get; set; }
-        public int SubjectESEMaxMarks{ get; set; }
-        public int SubjectTotalMaxMarks{ get; set; }
-        public decimal SubjectESEDuration{ get; set; }
-        public string SubjectCompulsory { get; set; }
-     
+        public string CourseCode{ get; set; }
+        public string CourseTitle{ get; set; }
+        public int CourseLHrPerWeek{ get; set; }
+        public int CourseTHrPerWeek{ get; set; }
+        public int CoursePHrPerWeek{ get; set; }
+        public int CourseCredit{ get; set; }
+        public int CourseCAMaxMarks{ get; set; }
+        public int CourseESEMaxMarks{ get; set; }
+        public int CourseTotalMaxMarks{ get; set; }
+        public decimal CourseESEDuration{ get; set; }
+        public string CourseType { get; set; }
+        public string CourseGroup { get; set; }
+        public string CourseTHPR { get; set; }
 
-        public List<CourseSchemeClass> GetSubjectScheme()
+        public List<CourseSchemeClass> GetCourseScheme()
         {
             List<CourseSchemeClass> SubjectList = new List<CourseSchemeClass>();
-
-           
-
-            DataTable ds = new DataTable();
+           DataTable ds = new DataTable();
 
             try
             {
 
                 using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
-                    SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetSubjectScheme]", conn);
-                    sqlComm.Parameters.AddWithValue("@Subject_ID", CourseID);
-                    sqlComm.Parameters.AddWithValue("@CourseCat_ID", CourseCatID);
-                    sqlComm.Parameters.AddWithValue("@Dept_ID", DeptID);
-                    sqlComm.Parameters.AddWithValue("@Sem_ID", SemID);
+                    SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetCourseScheme]", conn);
+                    if(CourseID>0)
+                    sqlComm.Parameters.AddWithValue("@CourseID", CourseID);
 
+                    if(CourseCategoryID>0)
+                    sqlComm.Parameters.AddWithValue("@CourseCategoryID", CourseCategoryID);
+                   
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
 
@@ -64,37 +67,35 @@ namespace ERPNameSpace
                 bool b = false;
                 foreach (DataRow dr in ds.Rows)
                 {
-                    b = int.TryParse(dr["SubjectLHrPerWeek"].ToString(), out l);
-                    b = int.TryParse(dr["SubjectTHrPerWeek"].ToString(), out l);
-                    b = int.TryParse(dr["SubjectPHrPerWeek"].ToString(), out l);
-                    b = int.TryParse(dr["SubjectCredit"].ToString(), out c);
-                    b = int.TryParse(dr["SubjectCAMaxMarks"].ToString(), out ca);
-                    b = int.TryParse(dr["SubjectESEMaxMarks"].ToString(), out ese);
-                    b = int.TryParse(dr["SubjectTotalMaxMarks"].ToString(), out tmm);
-                    b = int.TryParse(dr["SubjectESEDuration"].ToString(), out dur);
+                    b = int.TryParse(dr["CourseLHr"].ToString(), out l);
+                    b = int.TryParse(dr["CourseTHr"].ToString(), out t);
+                    b = int.TryParse(dr["CoursePHr"].ToString(), out p);
+                    b = int.TryParse(dr["CourseCredit"].ToString(), out c);
+                    b = int.TryParse(dr["CourseCAMaxMarks"].ToString(), out ca);
+                    b = int.TryParse(dr["CourseESEMaxMarks"].ToString(), out ese);
+                    b = int.TryParse(dr["CourseTotalMaxMarks"].ToString(), out tmm);
+                    b = int.TryParse(dr["CourseESEDuration"].ToString(), out dur);
 
                     SubjectList.Add(new CourseSchemeClass
                     {
-                        CourseID = int.Parse(dr["Subject_ID"].ToString()),
-                        CourseCatID = dr["CourseCat_ID"].ToString(),
-                        CourseCategory = dr["CourseCategory"].ToString(),
-                        CourseCredit = dr["CourseCredit"].ToString(),
-                        DeptID = dr["Dept_ID"].ToString(),
-                        DeptCode = dr["DeptCode"].ToString(),
-                        DeptName = dr["DeptName"].ToString(),
-                        SemID =int.Parse(dr["SemID"].ToString()),
-                        SemCode = dr["SemCode"].ToString(),
-                        SubjectCode = dr["SubjectCode"].ToString(),
-                        SubjectTitle = dr["SubjectTitle"].ToString(),
-                        SubjectLHrPerWeek = l,
-                        SubjectTHrPerWeek = t,
-                        SubjectPHrPerWeek = p,
-                        SubjectCredit = c,
-                        SubjectCAMaxMarks = ca,
-                        SubjectESEMaxMarks = ese,
-                        SubjectTotalMaxMarks = tmm,
-                        SubjectESEDuration = dur,
-                        SubjectCompulsory = dr["SubjectCompulsory"].ToString(),
+                        CourseID = int.Parse(dr["CourseID"].ToString()),
+                        CourseCategoryID = int.Parse(dr["CourseCategoryID"].ToString()),
+                      
+                      ProgramID=int.Parse(dr["programid"].ToString()),
+                        SemesterID =int.Parse(dr["SemesterID"].ToString()),
+                        CourseCode = dr["SubjectCode"].ToString(),
+                        CourseTitle = dr["SubjectTitle"].ToString(),
+                       CourseLHrPerWeek = l,
+                        CourseTHrPerWeek = t,
+                        CoursePHrPerWeek = p,
+                        CourseCredit = c,
+                       CourseCAMaxMarks = ca,
+                        CourseESEMaxMarks = ese,
+                        CourseTotalMaxMarks = tmm,
+                        CourseESEDuration = dur,
+                        CourseType = dr["CourseType"].ToString(),
+                        CourseGroup=dr["coursegroup"].ToString(),
+                        CourseTHPR=dr["courseTHPR"].ToString()
 
                     });
 
@@ -109,7 +110,7 @@ namespace ERPNameSpace
 
         }
 
-        public MessageClass UpdateSubjectScheme(string action = "insert")
+        public MessageClass UpdateCourseScheme(string action = "insert")
         {
             MessageClass rm = new MessageClass();
           
@@ -119,34 +120,38 @@ namespace ERPNameSpace
                 using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
-                    SqlCommand cmd = new SqlCommand("Proc_UpdateSubjectScheme", con);
+                    SqlCommand cmd = new SqlCommand("Proc_UpdateCourseScheme", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Subject_ID", CourseID);
-                    cmd.Parameters.AddWithValue("@Dept_ID", DeptID);
-                    cmd.Parameters.AddWithValue("@Sem_ID", SemID);
-                    cmd.Parameters.AddWithValue("@CourseCat_ID", CourseCatID);
+                    cmd.Parameters.AddWithValue("@CourseID", CourseID);
+                    cmd.Parameters.AddWithValue("@ProgramID", ProgramID);
+                    cmd.Parameters.AddWithValue("@SemesterID", SemesterID);
+                    cmd.Parameters.AddWithValue("@CourseCategoryID", CourseCategoryID);
 
-                    cmd.Parameters.AddWithValue("@Subjectcode", SubjectCode);
-                    cmd.Parameters.AddWithValue("@subjecttitle", SubjectTitle);
-                    cmd.Parameters.AddWithValue("@subjectLHrPerWeek", SubjectLHrPerWeek);
-                    cmd.Parameters.AddWithValue("@subjectTHrPerWeek", SubjectTHrPerWeek);
-                    cmd.Parameters.AddWithValue("@subjectPHrPerWeek", SubjectPHrPerWeek);
+                    cmd.Parameters.AddWithValue("@acyr",AcademicYear);
+                    cmd.Parameters.AddWithValue("@coursecode",CourseCode);
+                    cmd.Parameters.AddWithValue("@coursetitle", CourseTitle);
+                    cmd.Parameters.AddWithValue("@courseGroup", CourseGroup);
+                    cmd.Parameters.AddWithValue("@CourseLHr", CourseLHrPerWeek);
+                    cmd.Parameters.AddWithValue("@CourseTHr", CourseTHrPerWeek);
+                    cmd.Parameters.AddWithValue("@CoursePHr", CoursePHrPerWeek);
 
-                    cmd.Parameters.AddWithValue("@subjectcredit", SubjectCredit);
-                    cmd.Parameters.AddWithValue("@subjectcamaxmarks", SubjectCAMaxMarks);
-                    cmd.Parameters.AddWithValue("@subjectesemaxmarks", SubjectESEMaxMarks);
-                    cmd.Parameters.AddWithValue("@subjecteseduration", SubjectESEDuration);
-                    cmd.Parameters.AddWithValue("@subjectCompulsory", SubjectCompulsory);
+                    cmd.Parameters.AddWithValue("@coursecredit", CourseCredit);
+                    cmd.Parameters.AddWithValue("@coursecamaxmarks", CourseCAMaxMarks);
+                    cmd.Parameters.AddWithValue("@courseesemaxmarks", CourseESEMaxMarks);
+                    cmd.Parameters.AddWithValue("@courseeseduration", CourseESEDuration);
+                    cmd.Parameters.AddWithValue("@coursetype", CourseType);
+                    cmd.Parameters.AddWithValue("@courseTHPR", CourseTHPR);
+
 
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
-                    rm.Message = (string)cmd.Parameters["@rvalue"].Value;
+                    rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
                     rm.Status = "success";
                 }
             }
             catch(Exception er) {
-                rm.Message = er.Message.ToString();
+                rm.ErrorMessage = er.Message.ToString();
                 rm.Status = "failed";
             }
 
@@ -154,23 +159,7 @@ namespace ERPNameSpace
 
         }
         
-        public string GetSubjectTitleByID(string subjectID)
-        {
-
-            string subjectName = "";
-            try
-            {
-             
-                string sql = "select subjectTitle from subjectscheme where subject_id=" + subjectID;
-                subjectName = ConnectionDB.RunSQL(sql);
-
-            }
-            catch
-            {
-                subjectName = null;
-            }
-            return subjectName;
-        }
+      
 
 
     }

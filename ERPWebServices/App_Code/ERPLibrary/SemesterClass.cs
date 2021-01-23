@@ -12,29 +12,18 @@ using System.Data.SqlClient;
 /// 
 namespace ERP
 {
-    public class SemesterClass
+    public class SemesterClass:ProgramClass
     {
-       private int Sem_ID;
+     
+        public SemesterClass()
+        {
+            SemesterID = 0;
+           
+        }
 
-        bool b = false;
-        int x = 0; 
-
-        public string SemID { get { return Sem_ID.ToString(); }
-            set {
-                b = int.TryParse(value, out x);
-                if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else if (x > 0)
-                {
-                    Sem_ID = x;
-
-                }
-            } }
-        public string SemCode { get; set; }
-        public string ErrorMessage { get; set; }
-
+        public int SemesterID { get; set; }
+        public string SemesterCode { get; set; }
+      
         public List<SemesterClass> GetSemester()
         {
             ERPConnectionClass erpconn = new ERPConnectionClass();
@@ -46,7 +35,9 @@ namespace ERP
                 using (SqlConnection conn = erpconn.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetSemester", conn);
-                    sqlComm.Parameters.AddWithValue("@sem_id", Sem_ID);
+
+                    if(SemesterID>0)
+                    sqlComm.Parameters.AddWithValue("@semesterid", SemesterID);
 
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
@@ -61,8 +52,8 @@ namespace ERP
                 {
                     semList.Add(new SemesterClass
                     {
-                        Sem_ID = int.Parse(dr["sem_id"].ToString()),
-                        SemCode = dr["semcode"].ToString(),
+                        SemesterID = int.Parse(dr["semesterid"].ToString()),
+                        SemesterCode = dr["semestercode"].ToString(),
                     });
 
                 }

@@ -123,7 +123,7 @@ public class LoginClass
                 sqlComm.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                 sqlComm.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                 sqlComm.ExecuteNonQuery();
-               rm.Message = (string)sqlComm.Parameters["@rvalue"].Value;
+               rm.SuccessMessage = (string)sqlComm.Parameters["@rvalue"].Value;
                 rm.Status = "success";
 
             }

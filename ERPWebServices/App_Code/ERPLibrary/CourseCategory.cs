@@ -13,57 +13,39 @@ using ERPConnection;
 /// 
 namespace ERP
 {
-    public class CourseCategoryClass:DepartmentClass
+    public class CourseCategoryClass:SemesterClass
     {
-       private int CatID;
-
-        bool b = false;
-        int x = 0;
-       int c = 0;
-        public string CourseCatID { get { return CatID.ToString(); }
-            set {
-                b = int.TryParse(value, out x);
-                if (x < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else if (x > 0)
-                {
-                   CatID = x;
-
-                }
-            } }
-        public string CourseCategory { get; set; }
-      
-        public string CourseCredit
+        public CourseCategoryClass()
         {
-            get { return c.ToString(); }
-            set
-            {
-                b = int.TryParse(value, out c);
-                if (c < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                
-               
-            }
+            CourseCategoryID = 0;
+            ProgramID = 0;
         }
+
+
+      
+        public int CourseCategoryID { get; set; }
+        public string CourseCategoryTitle { get; set; }
+        public string CourseCategoryCredit{ get; set; }
+        public string AcademicYear { get; set; }   
       
 
         public List<CourseCategoryClass> GetCourseCategory()
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
 
             List<CourseCategoryClass> CatList = new List<CourseCategoryClass>();
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetCourseCategory", conn);
-                    sqlComm.Parameters.AddWithValue("@CourseCat_ID", CatID);
-                    sqlComm.Parameters.AddWithValue("@dept_ID", DeptID);
+
+                    if(CourseCategoryID>0)
+                    sqlComm.Parameters.AddWithValue("@CourseCategoryID",CourseCategoryID);
+
+                    if(ProgramID>0)
+                    sqlComm.Parameters.AddWithValue("@ProgramID",ProgramID);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
 
@@ -77,10 +59,9 @@ namespace ERP
                 {
                     CatList.Add(new CourseCategoryClass
                     {
-                        CourseCatID = dr["CourseCat_ID"].ToString(),
-                        DeptID = dr["Dept_ID"].ToString(),
-                        CourseCategory = dr["CourseCategory"].ToString(),
-                        CourseCredit = dr["CourseCredit"].ToString()
+                        CourseCategoryID = int.Parse(dr["CourseCategoryID"].ToString()),
+                        CourseCategoryTitle = dr["CourseCategoryTitle"].ToString(),
+                        CourseCategoryCredit = dr["CourseCategoryCredit"].ToString()
                         
                     });
 
@@ -97,29 +78,29 @@ namespace ERP
         public MessageClass UpdateCourseCategory(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+          
             try
             {
 
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateCourseCategory", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@CourseCat_ID", CourseCatID);
-                    cmd.Parameters.AddWithValue("@CourseCategory", CourseCategory);
-                    cmd.Parameters.AddWithValue("@CourseCredit", CourseCredit);
+                    cmd.Parameters.AddWithValue("@CourseCategoryID", CourseCategoryID);
+                    cmd.Parameters.AddWithValue("@CourseCategoryTitle", CourseCategoryTitle);
+                    cmd.Parameters.AddWithValue("@CourseCategoryCredit", CourseCategoryCredit);
 
 
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
-                    rm.Message = (string)cmd.Parameters["@rvalue"].Value;
+                    rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
                     rm.Status = "success";
                 }
             }
             catch(Exception er) {
-                rm.Message = er.Message.ToString();
+                rm.ErrorMessage = er.Message.ToString();
                 rm.Status = "failed";
             }
 

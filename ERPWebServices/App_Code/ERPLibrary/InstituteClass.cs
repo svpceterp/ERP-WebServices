@@ -14,15 +14,15 @@ namespace ERP
     public class InstituteClass:UniversityClass
     {
       
-       public int InstitueID { get; set; }
-       public string InstitueCode { get; set; }
-        public string InstitueName { get; set; }
-        public string InstitueStreet { get; set; }
-        public string InstitueCity { get; set; }
-        public string InstitueDistrict { get; set; }
-        public string InstitueState { get; set; }
-        public string InstitueCountry { get; set; }
-        public string InstituePinCode { get; set; }
+       public int InstituteID { get; set; }
+       public string InstituteCode { get; set; }
+        public string InstituteName { get; set; }
+        public string InstituteStreet { get; set; }
+        public string InstituteCity { get; set; }
+        public string InstituteDistrict { get; set; }
+        public string InstituteState { get; set; }
+        public string InstituteCountry { get; set; }
+        public string InstitutePinCode { get; set; }
        
 
         ERPConnectionClass erpconn = new ERPConnectionClass();
@@ -37,7 +37,7 @@ namespace ERP
             using (SqlConnection conn = erpconn.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetInstitute", conn);
-                sqlComm.Parameters.AddWithValue("@Instituteid", InstitueID);
+                sqlComm.Parameters.AddWithValue("@Instituteid", InstituteID);
                
 
 
@@ -53,15 +53,15 @@ namespace ERP
             {
                 Instlist.Add(new InstituteClass
                 {
-                    InstitueID = int.Parse(dr["Institueid"].ToString()),
-                    InstitueCode = dr["Instituecode"].ToString(),
-                    InstitueName = dr["Instituename"].ToString(),
-                    InstitueStreet = dr["InstitueStreet"].ToString(),
-                    InstitueCity = dr["InstitueCity"].ToString(),
-                    InstitueDistrict = dr["InstitueDistrict"].ToString(),
-                    InstitueState = dr["InstitueState"].ToString(),
-                    InstitueCountry = dr["InstitueCountry"].ToString(),
-                    InstituePinCode = dr["InstituePinCode"].ToString(),
+                    InstituteID = int.Parse(dr["Institueid"].ToString()),
+                    InstituteCode = dr["Instituecode"].ToString(),
+                    InstituteName = dr["Instituename"].ToString(),
+                    InstituteStreet = dr["InstitueStreet"].ToString(),
+                    InstituteCity = dr["InstitueCity"].ToString(),
+                    InstituteDistrict = dr["InstitueDistrict"].ToString(),
+                    InstituteState = dr["InstitueState"].ToString(),
+                    InstituteCountry = dr["InstitueCountry"].ToString(),
+                    InstitutePinCode = dr["InstituePinCode"].ToString()
                     
                 });
 
@@ -82,15 +82,15 @@ namespace ERP
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateInstitute", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@InstitueID", InstitueID);
-                    cmd.Parameters.AddWithValue("@InstitueCode", InstitueCode);
-                    cmd.Parameters.AddWithValue("@InstitueName", InstitueName);
-                    cmd.Parameters.AddWithValue("@InstitueStreet", InstitueStreet);
-                    cmd.Parameters.AddWithValue("@InstitueCity", InstitueCity);
-                    cmd.Parameters.AddWithValue("@InstitueDistrict", InstitueDistrict);
-                    cmd.Parameters.AddWithValue("@InstitueState", InstitueState);
-                    cmd.Parameters.AddWithValue("@InstitueCountry", InstitueCountry);
-                    cmd.Parameters.AddWithValue("@InstituePinCode", InstituePinCode);
+                    cmd.Parameters.AddWithValue("@InstitueID", InstituteID);
+                    cmd.Parameters.AddWithValue("@InstitueCode", InstituteCode);
+                    cmd.Parameters.AddWithValue("@InstitueName", InstituteName);
+                    cmd.Parameters.AddWithValue("@InstitueStreet", InstituteStreet);
+                    cmd.Parameters.AddWithValue("@InstitueCity", InstituteCity);
+                    cmd.Parameters.AddWithValue("@InstitueDistrict", InstituteDistrict);
+                    cmd.Parameters.AddWithValue("@InstitueState", InstituteState);
+                    cmd.Parameters.AddWithValue("@InstitueCountry", InstituteCountry);
+                    cmd.Parameters.AddWithValue("@InstituePinCode", InstitutePinCode);
 
 
 

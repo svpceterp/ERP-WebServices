@@ -29,8 +29,8 @@ namespace ERP
             using (SqlConnection conn = erpconn.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetDepartment", conn);
-                sqlComm.Parameters.AddWithValue("@dept_id", DeptID);
-                sqlComm.Parameters.AddWithValue("@course_id", CourseID);
+                sqlComm.Parameters.AddWithValue("@DepartmentID",DepartmentID);
+              
 
 
                 sqlComm.CommandType = CommandType.StoredProcedure;
@@ -45,10 +45,10 @@ namespace ERP
             {
                 deptlist.Add(new DepartmentClass
                 {
-                    DeptID = dr["dept_id"].ToString(),
-                    DeptCode = dr["deptcode"].ToString(),
-                    DeptName = dr["deptname"].ToString(),
-                    CourseID = dr["course_id"].ToString()
+                    DepartmentID = int.Parse(dr["deptid"].ToString()),
+                    DepartmentCode = dr["deptcode"].ToString(),
+                    DepartmentName = dr["deptname"].ToString(),
+                    InstituteID = int.Parse(dr["instituteid"].ToString())
                 });
 
             }
@@ -68,24 +68,22 @@ namespace ERP
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateDepartment", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Dept_ID", DeptID);
-                    cmd.Parameters.AddWithValue("@DeptCode", DeptCode);
-                    cmd.Parameters.AddWithValue("@DeptName",DeptName);
-                    cmd.Parameters.AddWithValue("@Course_ID", CourseID);
-                    cmd.Parameters.AddWithValue("@DeptStartDate", DeptStartDate);
-                    cmd.Parameters.AddWithValue("@DeptEndDate", DeptEndDate);
-
+                    cmd.Parameters.AddWithValue("@DepartmentID", DepartmentID);
+                    cmd.Parameters.AddWithValue("@DepartmentCode", DepartmentCode);
+                    cmd.Parameters.AddWithValue("@DepartmentName", DepartmentName);
+                    cmd.Parameters.AddWithValue("@InstituteID", InstituteID);
+                   
 
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
-                    rm.Message = (string)cmd.Parameters["@rvalue"].Value;
+                    rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
                     rm.Status = "success";
                 }
             }
             catch (Exception er)
             {
-                rm.Message = er.Message.ToString();
+                rm.ErrorMessage = er.Message.ToString();
                 rm.Status = "failed";
             }
 

@@ -42,7 +42,7 @@ public class WS_Examination : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public List<ExamSubjectsClass> GetExamSubjects(string ExamID, string uid)
+    public List<ExamSubjectsClass> GetExamCourse(string ExamID, string uid)
     {
         ExamSubjectsClass exSub = new ExamSubjectsClass();
         List<ExamSubjectsClass> exsubjectList = new List<ExamSubjectsClass>();
@@ -76,7 +76,7 @@ public class WS_Examination : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public MessageClass UpdateExamSubjects(ExamSubjectsClass exSub, string action = "Insert")
+    public MessageClass UpdateExamCourse(ExamSubjectsClass exSub, string action = "Insert")
     {
 
         MessageClass rm = new MessageClass();

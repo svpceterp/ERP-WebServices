@@ -16,7 +16,7 @@ using System.Web.Services;
 public class WS_ERPMaster : System.Web.Services.WebService
 {
     [WebMethod]
-    public List<DepartmentClass> GetDepartment(string DeptID, string CourseID)
+    public List<DepartmentClass> GetDepartment(int DepartmentID)
     {
         MessageClass ec = new MessageClass();
         DepartmentClass dClass = new DepartmentClass();
@@ -24,9 +24,8 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
         try
         {
-            dClass.DeptID = ((String.IsNullOrEmpty(DeptID)) ? "0" : DeptID);
-            dClass.CourseID = (String.IsNullOrEmpty(CourseID)) ? "0" : CourseID;
-
+            dClass.DepartmentID =(DepartmentID!=0)?DepartmentID:0;
+            
             deptList = dClass.GetDepartment();
 
         }
@@ -40,13 +39,13 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public List<SemesterClass> GetSemester(string SemID)
+    public List<SemesterClass> GetSemester(int SemesterID)
     {
         SemesterClass sClass = new SemesterClass();
         List<SemesterClass> semList = new List<SemesterClass>();
         try
         {
-            sClass.SemID = String.IsNullOrEmpty(SemID) ? "0" : SemID;
+            sClass.SemesterID = SemesterID;
 
             semList = sClass.GetSemester();
         }
@@ -57,74 +56,34 @@ public class WS_ERPMaster : System.Web.Services.WebService
         return semList;
 
     }
+   
+
     [WebMethod]
-    public List<CourseCategoryClass> GetCourseCategory(string CourseCatID = "0")
+    public List<ProgramClass> GetProgram(int ProgramID)
     {
-        CourseCategoryClass sClass = new CourseCategoryClass();
-        List<CourseCategoryClass> CatList = new List<CourseCategoryClass>();
+        ProgramClass pClass = new ProgramClass();
+        List<ProgramClass> programList = new List<ProgramClass>();
         try
         {
-            sClass.CourseCatID = String.IsNullOrEmpty(CourseCatID) ? "0" : CourseCatID;
+            pClass.ProgramID = ProgramID;
 
-            CatList = sClass.GetCourseCategory();
+            programList = pClass.GetProgram();
         }
         catch (Exception er)
         {
-            CatList.Add(new CourseCategoryClass { ErrorMessage = er.Message.ToString() });
+            programList.Add(new ProgramClass { ErrorMessage = er.Message.ToString() });
         }
-        return CatList;
+        return programList;
 
     }
 
-    [WebMethod]
-    public List<CourseProgramClass> GetCourseProgram(string CourseID = "0")
-    {
-        CourseProgramClass sClass = new CourseProgramClass();
-        List<CourseProgramClass> CourseList = new List<CourseProgramClass>();
-        try
-        {
-            sClass.CourseID = String.IsNullOrEmpty(CourseID) ? "0" : CourseID;
-
-            CourseList = sClass.GetCourseProgram();
-        }
-        catch (Exception er)
-        {
-            CourseList.Add(new CourseProgramClass { ErrorMessage = er.Message.ToString() });
-        }
-        return CourseList;
-
-    }
-
-    [WebMethod]
-    public List<SubjectSchemeClass> GetSubjectScheme(string SubjectID, string DeptID, string SemID, string CourseCatID)
-    {
-
-        SubjectSchemeClass subClass = new SubjectSchemeClass();
-        List<SubjectSchemeClass> subList = new List<SubjectSchemeClass>();
-
-        try
-        {
-            subClass.SubjectID = String.IsNullOrEmpty(SubjectID) ? "0" : SubjectID;
-            subClass.DeptID = String.IsNullOrEmpty(DeptID) ? "0" : DeptID;
-            subClass.SemID = String.IsNullOrEmpty(SemID) ? "0" : SemID;
-            subClass.CourseCatID = String.IsNullOrEmpty(CourseCatID) ? "0" : CourseCatID;
-            subList = subClass.GetSubjectScheme();
-        }
-        catch (Exception er)
-        {
-            subList.Add(new SubjectSchemeClass { ErrorMessage = er.Message.ToString() });
-
-        }
-        return subList;
-
-    }
-
+  
     [WebMethod]
     public List<CountryClass> GetCountry()
     {
         CountryClass countryClass = new CountryClass();
         List<CountryClass> countryNameList = new List<CountryClass>();
-        countryNameList = countryClass.GetCountryName();
+        countryNameList = countryClass.GetCountry();
 
         return countryNameList;
 
@@ -134,7 +93,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
     {
         StateClass stateClass = new StateClass();
         List<StateClass> stateNameList = new List<StateClass>();
-        stateNameList = stateClass.GetStateName(CountryCode);
+        stateNameList = stateClass.GetState(CountryCode);
 
         return stateNameList;
 
@@ -149,25 +108,8 @@ public class WS_ERPMaster : System.Web.Services.WebService
         return InstList;
 
     }
-    [WebMethod]
-    public MessageClass UpdateCourseCategory(CourseCategoryClass ccat, string action = "Insert")
-    {
-
-        MessageClass rm = new MessageClass();
-        rm = ccat.UpdateCourseCategory(action);
-
-        return rm;
-
-    }
-    [WebMethod]
-    public MessageClass UpdateSubjectScheme(SubjectSchemeClass subjectScheme, string action = "Insert")
-    {
-        MessageClass rm = new MessageClass();
-        rm = subjectScheme.UpdateSubjectScheme(action);
-
-        return rm;
-
-    }
+   
+   
 
     [WebMethod]
     public MessageClass UpdateDepartment(DepartmentClass dept, string action = "Insert")

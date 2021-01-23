@@ -186,13 +186,13 @@ namespace ERP
                     cmd.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
-                    rm.Message = (string)cmd.Parameters["@rvalue"].Value;
+                    rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
                     rm.Status = "success";
                 }
             }
             catch (Exception er)
             {
-                rm.Message = er.Message.ToString();
+                rm.ErrorMessage = er.Message.ToString();
                 rm.Status = "failed";
             }
 
