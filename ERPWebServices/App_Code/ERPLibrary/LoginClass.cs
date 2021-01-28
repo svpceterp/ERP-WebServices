@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 /// <summary>
 /// Summary description for LoginClass
 /// </summary>
-public class LoginClass
+public class LoginClass:PersonalClass
 {
     string UserName;
     string Password;

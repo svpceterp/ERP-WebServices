@@ -112,8 +112,7 @@ public class CourseSchemeClass : CourseCategoryClass
     public MessageClass UpdateCourseScheme(string action = "insert")
     {
         MessageClass rm = new MessageClass();
-
-
+        
         try
         {
             using (SqlConnection con = ConnectionDB.OpenConnection())

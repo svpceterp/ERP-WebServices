@@ -12,7 +12,7 @@ using ERPConnection;
 /// </summary>
 /// 
 
-    public class CourseCategoryClass:ProgramClass
+    public class CourseCategoryClass:InstituteSetup
     {
         public CourseCategoryClass()
         {

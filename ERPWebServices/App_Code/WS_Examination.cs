@@ -21,17 +21,14 @@ public class WS_Examination : System.Web.Services.WebService
    
    
     [WebMethod]
-    public List<ExamScheduleClass> GetExamSchedule(string ExamID,string DeptID,string SemID,string CourseID)
+    public List<ExamScheduleClass> GetExamSchedule(string ExamID)
     {
         ExamScheduleClass examClass = new ExamScheduleClass();
         List<ExamScheduleClass> examList = new List<ExamScheduleClass>();
 
         try
         {
-            examClass.ExamCourseID = (String.IsNullOrEmpty(CourseID) ? "0" : CourseID);
-            examClass.ExamDeptID = (String.IsNullOrEmpty(DeptID) ? "0" : DeptID);
-            examClass.ExamSemID = (String.IsNullOrEmpty(SemID) ? "0" : SemID);
-            examClass.ExamID = (String.IsNullOrEmpty(ExamID) ? "0" : ExamID);
+            examClass.ExamID = int.Parse((String.IsNullOrEmpty(ExamID) ? "0" : ExamID));
 
             examList = examClass.GetExamSchedule();
         }

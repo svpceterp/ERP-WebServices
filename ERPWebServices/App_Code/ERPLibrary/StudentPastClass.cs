@@ -7,12 +7,9 @@ using System.Web;
 /// <summary>
 /// Summary description for StudentPastClass
 /// </summary>
- public class StudentPastClass:PersonalClass
+ public class StudentPastClass:StudentClass
     {
      
-      
-     
-
         public string LastExamPassed { get; set; }
         public string LastExamRollNo { get; set; }
         public string LastExamPassOutYear { get; set; }

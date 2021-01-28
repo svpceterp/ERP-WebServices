@@ -8,7 +8,7 @@ using System.Web;
 /// Summary description for UniversityClass
 /// </summary>
 
-    public class UniversityClass:MessageClass
+    public class UniversityClass:CityClass
     {
         public int UniversityID { get; set; }
     }

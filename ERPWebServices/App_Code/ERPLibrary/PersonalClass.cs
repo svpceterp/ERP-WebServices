@@ -12,7 +12,7 @@ using System.Data;
 /// </summary>
 /// 
 
-    public class PersonalClass:SectionClass
+    public class PersonalClass:InstituteSetup
     {
        
         public string Uid { get; set; }
