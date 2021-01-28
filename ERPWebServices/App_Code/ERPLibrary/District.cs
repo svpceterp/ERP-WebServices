@@ -10,8 +10,7 @@ using System.Globalization;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERP
-{
+
     public class DistrictClass:StateClass
     {
      
@@ -28,7 +27,7 @@ namespace ERP
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetDistrict", conn);
                     sqlComm.Parameters.AddWithValue("@Districtid", CountryID);
@@ -66,4 +65,3 @@ namespace ERP
         }
       
     }
-}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERP;
+
 using ERPConnection;
 using System.Data.SqlClient;
 using System.Data;
@@ -11,9 +11,8 @@ using System.Data;
 /// Summary description for PersonalClass
 /// </summary>
 /// 
-namespace ERP
-{
-    public class PersonalClass:MessageClass
+
+    public class PersonalClass:SectionClass
     {
        
         public string Uid { get; set; }
@@ -60,7 +59,7 @@ namespace ERP
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetPersonalDetails", conn);
 
@@ -203,4 +202,3 @@ namespace ERP
 
 
     }
-}

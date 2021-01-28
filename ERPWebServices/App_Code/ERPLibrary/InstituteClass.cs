@@ -9,8 +9,7 @@ using ERPConnection;
 /// Summary description for DepartmentClass
 /// </summary>
 
-namespace ERP
-{
+
     public class InstituteClass:UniversityClass
     {
       
@@ -34,7 +33,7 @@ namespace ERP
 
             DataTable ds = new DataTable();
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetInstitute", conn);
                 sqlComm.Parameters.AddWithValue("@Instituteid", InstituteID);
@@ -113,4 +112,3 @@ namespace ERP
 
 
     }
-}

@@ -1,4 +1,4 @@
-﻿using ERP;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +13,10 @@ using System.Web.Services;
 [System.ComponentModel.ToolboxItem(false)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
-public class WS_ERPMaster : System.Web.Services.WebService
+public class WS_InstituteSetup : System.Web.Services.WebService
 {
     [WebMethod]
-    public List<DepartmentClass> GetDepartment(string DepartmentID)
+    public List<DepartmentClass> GetDepartment(string departmentID)
     {
         MessageClass ec = new MessageClass();
         DepartmentClass dClass = new DepartmentClass();
@@ -25,7 +25,7 @@ public class WS_ERPMaster : System.Web.Services.WebService
         try
         {
             int id = 0;
-            bool b = int.TryParse(DepartmentID, out id);
+            bool b = int.TryParse(departmentID, out id);
 
 
             dClass.DepartmentID = id;
@@ -43,13 +43,16 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public List<SemesterClass> GetSemester(int SemesterID)
+    public List<SemesterClass> GetSemester(string semesterID)
     {
         SemesterClass sClass = new SemesterClass();
         List<SemesterClass> semList = new List<SemesterClass>();
         try
         {
-            sClass.SemesterID = SemesterID;
+            int id = 0;
+            bool b = int.TryParse(semesterID, out id);
+
+           sClass.SemesterID = id;
 
             semList = sClass.GetSemester();
         }
@@ -63,13 +66,15 @@ public class WS_ERPMaster : System.Web.Services.WebService
    
 
     [WebMethod]
-    public List<ProgramClass> GetProgram(int ProgramID)
+    public List<ProgramClass> GetProgram(string programID)
     {
         ProgramClass pClass = new ProgramClass();
         List<ProgramClass> programList = new List<ProgramClass>();
         try
         {
-            pClass.ProgramID = ProgramID;
+            int id = 0;
+            bool b = int.TryParse(programID, out id);
+            pClass.ProgramID = id;
 
             programList = pClass.GetProgram();
         }
@@ -93,20 +98,29 @@ public class WS_ERPMaster : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public List<StateClass> GetState(string CountryCode = "ALL")
+    public List<StateClass> GetState(string countryCode)
     {
         StateClass stateClass = new StateClass();
         List<StateClass> stateNameList = new List<StateClass>();
-        stateNameList = stateClass.GetState(CountryCode);
+
+        if (countryCode.Length == 0)
+            countryCode = "ALL";
+
+        stateNameList = stateClass.GetState(countryCode);
 
         return stateNameList;
 
     }
     [WebMethod]
-    public List<InstituteClass> GetInstitute(string InstID = "ALL")
+    public List<InstituteClass> GetInstitute(string instituteID)
     {
         InstituteClass Inst = new InstituteClass();
         List<InstituteClass> InstList = new List<InstituteClass>();
+
+        int id = 0;
+        bool b = int.TryParse(instituteID, out id);
+
+        Inst.InstituteID = id;
         InstList = Inst.GetInstitute();
 
         return InstList;

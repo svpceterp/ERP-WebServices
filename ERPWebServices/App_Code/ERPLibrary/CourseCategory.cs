@@ -11,9 +11,8 @@ using ERPConnection;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERP
-{
-    public class CourseCategoryClass:SemesterClass
+
+    public class CourseCategoryClass:ProgramClass
     {
         public CourseCategoryClass()
         {
@@ -109,4 +108,3 @@ namespace ERP
         }
 
     }
-}

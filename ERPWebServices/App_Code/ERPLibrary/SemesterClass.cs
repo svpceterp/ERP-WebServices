@@ -10,8 +10,7 @@ using System.Data.SqlClient;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERP
-{
+
     public class SemesterClass:ProgramClass
     {
      
@@ -32,7 +31,7 @@ namespace ERP
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("Proc_GetSemester", conn);
 
@@ -68,4 +67,3 @@ namespace ERP
         }
 
     }
-}

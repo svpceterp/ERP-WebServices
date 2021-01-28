@@ -10,8 +10,7 @@ using System.Globalization;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERP
-{
+
     public class CountryClass:MessageClass
     {
      
@@ -28,7 +27,7 @@ namespace ERP
         //    DataTable ds = new DataTable();
         //    try
         //    {
-        //        using (SqlConnection conn = erpconn.OpenConnection())
+        //        using (SqlConnection conn = ConnectionDB.OpenConnection())
         //        {
         //            SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);
         //            sqlComm.Parameters.AddWithValue("@Countryid", CountryID);
@@ -72,7 +71,7 @@ namespace ERP
         //    CountryClass country = new CountryClass();
         //    DataTable ds = new DataTable();
         //    try { 
-        //    using (SqlConnection conn = erpconn.OpenConnection())
+        //    using (SqlConnection conn = ConnectionDB.OpenConnection())
         //    {
         //        string sql = "select * from tbl_country where countryName=@CountryName";
         //        SqlCommand sqlComm = new SqlCommand("Proc_GetCountry", conn);
@@ -143,4 +142,3 @@ namespace ERP
 
         }
     }
-}

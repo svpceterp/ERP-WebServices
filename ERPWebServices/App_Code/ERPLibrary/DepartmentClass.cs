@@ -9,9 +9,7 @@ using ERPConnection;
 /// Summary description for DepartmentClass
 /// </summary>
 
-namespace ERP
-{
-    public class DepartmentClass:InstituteClass
+   public class DepartmentClass:InstituteClass
     {
         public int DepartmentID { get; set;}
         public string DepartmentCode { get; set; }
@@ -95,4 +93,3 @@ namespace ERP
 
 
     }
-}

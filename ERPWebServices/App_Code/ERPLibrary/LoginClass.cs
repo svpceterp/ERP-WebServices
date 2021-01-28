@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using ERP;
+
 
 /// <summary>
 /// Summary description for LoginClass

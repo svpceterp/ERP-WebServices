@@ -10,8 +10,6 @@ using System.Web;
 /// Summary description for ExamScheduleClass
 /// </summary>
 /// 
-namespace ERP
-{
 
     public class ExamScheduleClass
     {
@@ -68,7 +66,7 @@ namespace ERP
             DataTable ds = new DataTable();
             try
             {
-                using (SqlConnection conn = erpconn.OpenConnection())
+                using (SqlConnection conn = ConnectionDB.OpenConnection())
                 {
                     SqlCommand sqlComm = new SqlCommand("[dbo].[Proc_GetExamSchedule]", conn);
                     sqlComm.Parameters.AddWithValue("@Exam_ID", Exam_ID);
@@ -183,4 +181,3 @@ namespace ERP
 
 
     }
-}

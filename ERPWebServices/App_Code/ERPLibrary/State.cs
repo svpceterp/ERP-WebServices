@@ -11,8 +11,7 @@ using System.Globalization;
 /// Summary description for SemesterClass
 /// </summary>
 /// 
-namespace ERP
-{
+
     public class StateClass:CountryClass
     {
        public int StateID { get; set; }
@@ -74,4 +73,3 @@ namespace ERP
 
 
     }
-}

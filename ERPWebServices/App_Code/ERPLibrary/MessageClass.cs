@@ -6,9 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for ErrorClass
 /// </summary>
-namespace ERP
-{
-   
+
 
    public class MessageClass
     {
@@ -18,4 +16,3 @@ namespace ERP
         public string ErrorNo { get; set; }
         public string StatusMessage { get; set; }
     }
-}

@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ERP;
+
 
 /// <summary>
 /// Summary description for StudentPastClass
 /// </summary>
-namespace ERP
-{
-    public class StudentPastClass:PersonalClass
+ public class StudentPastClass:PersonalClass
     {
      
       
@@ -46,4 +44,3 @@ namespace ERP
 
 
     }
-}
