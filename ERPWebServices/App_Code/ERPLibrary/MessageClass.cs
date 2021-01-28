@@ -16,6 +16,6 @@ namespace ERP
         public string SuccessMessage { get; set; }
         public string ErrorMessage { get; set; }
         public string ErrorNo { get; set; }
-        public string Status { get; set; }
+        public string StatusMessage { get; set; }
     }
 }

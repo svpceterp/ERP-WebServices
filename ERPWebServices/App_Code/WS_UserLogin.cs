@@ -19,16 +19,16 @@ public class WS_UserLogin : System.Web.Services.WebService
 {
 
     [WebMethod]
-    public UserClass CheckLogin(string UserName, string Password)
+    public MessageClass CheckLogin(string UserName, string Password)
     {
 
-        UserClass user = new UserClass();
+        MessageClass status = new MessageClass();
 
         LoginClass Login = new LoginClass(UserName, Password);
-        user = Login.CheckLogin();
+        status = Login.CheckLogin();
 
             
-        return user;
+        return status;
     }
 
     [WebMethod]

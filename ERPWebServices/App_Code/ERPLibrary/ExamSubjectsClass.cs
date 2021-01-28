@@ -207,7 +207,7 @@ namespace ERP
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
                     rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
-                    rm.Status = "success";
+                    rm.StatusMessage = "success";
                 }
             }
             catch (Exception er)

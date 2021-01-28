@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 /// <summary>
 /// Summary description for StudentClass
 /// </summary>
-public class StudentClass:UserModuleRoleClass
+public class StudentClass:StudentPastClass
 {
     public string InstID { get; set; }
     public string EnrollmentNo { get; set; }
@@ -176,13 +176,13 @@ public class StudentClass:UserModuleRoleClass
                 cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
-                rm.Status = "success";
+                rm.StatusMessage = "success";
             }
         }
         catch (Exception er)
         {
             rm.SuccessMessage = er.Message.ToString();
-            rm.Status = "failed";
+            rm.StatusMessage = "failed";
         }
 
         return rm;

@@ -10,23 +10,17 @@ using System.Data;
 /// <summary>
 /// Summary description for UserRoleClass
 /// </summary>
-public class UserModuleRoleClass:StudentPastClass
+public class UserModuleRoleClass:RoleClass
 {
-    public string ModuleRoleCode  { get; set; }
-   
-    public string ModuleRoleTitle { get; set; }
-    public string ModuleCode { get; set; }
-    public string ModuleName { get; set; }
-
-    public static string GetUserModuleRole(string uid, string ModuleCode = "ERP")
+       public static string GetUserModuleRole(string uid, string ModuleCode = "ERP")
     {
        
         string MRole = "Guest";
         try
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+           
             string sql = "select dbo.funGetUserModuleRole('" + uid + "','" + ModuleCode + "') as ModuleRole";
-            MRole = erpconn.RunFindSQL(sql);
+            MRole = ConnectionDB.RunSQL(sql);
                        
         }
         catch(Exception er) {

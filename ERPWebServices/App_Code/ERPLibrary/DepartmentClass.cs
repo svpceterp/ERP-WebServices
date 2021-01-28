@@ -17,7 +17,7 @@ namespace ERP
         public string DepartmentCode { get; set; }
         public string DepartmentName { get; set; }
        
-        ERPConnectionClass erpconn = new ERPConnectionClass();
+      
 
         public List<DepartmentClass> GetDepartment()
         {
@@ -26,9 +26,11 @@ namespace ERP
 
             DataTable ds = new DataTable();
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn =ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_GetDepartment", conn);
+
+                
                 sqlComm.Parameters.AddWithValue("@DepartmentID",DepartmentID);
               
 
@@ -45,9 +47,9 @@ namespace ERP
             {
                 deptlist.Add(new DepartmentClass
                 {
-                    DepartmentID = int.Parse(dr["deptid"].ToString()),
-                    DepartmentCode = dr["deptcode"].ToString(),
-                    DepartmentName = dr["deptname"].ToString(),
+                    DepartmentID = int.Parse(dr["departmentid"].ToString()),
+                    DepartmentCode = dr["departmentcode"].ToString(),
+                    DepartmentName = dr["departmentname"].ToString(),
                     InstituteID = int.Parse(dr["instituteid"].ToString())
                 });
 
@@ -59,11 +61,11 @@ namespace ERP
         public MessageClass UpdateDepartment(string action = "insert")
         {
             MessageClass rm = new MessageClass();
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+         
             try
             {
 
-                using (SqlConnection con = erpconn.OpenConnection())
+                using (SqlConnection con = ConnectionDB.OpenConnection())
                 {
 
                     SqlCommand cmd = new SqlCommand("Proc_UpdateDepartment", con);
@@ -78,13 +80,13 @@ namespace ERP
                     cmd.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                     cmd.ExecuteNonQuery();
                     rm.SuccessMessage = (string)cmd.Parameters["@rvalue"].Value;
-                    rm.Status = "success";
+                    rm.StatusMessage = "success";
                 }
             }
             catch (Exception er)
             {
                 rm.ErrorMessage = er.Message.ToString();
-                rm.Status = "failed";
+                rm.StatusMessage = "failed";
             }
 
             return rm;

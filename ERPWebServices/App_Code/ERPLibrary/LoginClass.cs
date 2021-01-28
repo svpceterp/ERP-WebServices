@@ -22,81 +22,56 @@ public class LoginClass
     {
         UserName = UName;
         Password = Pwd;
+        NewPassword = NewPwd;
 
     }
-    public UserClass CheckLogin()
+
+    public MessageClass CheckLogin()
     {
-       UserClass User=new UserClass();
+      MessageClass LoginStatus=new MessageClass();
 
         DataTable dt = new DataTable();
         try
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
           
-            using (SqlConnection conn = erpconn.OpenConnection())
+          
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_CheckLogin", conn);
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@username", UserName);
                 sqlComm.Parameters.AddWithValue("@password", Password);
-             
-                     SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = sqlComm;
 
-                    da.Fill(dt);
+
+
+                sqlComm.Parameters.Add("@status", SqlDbType.Char, 50);
+                sqlComm.Parameters["@status"].Direction = ParameterDirection.Output;
+
+                sqlComm.Parameters.Add("@errormessage", SqlDbType.Char, 500);
+                sqlComm.Parameters["@errormessage"].Direction = ParameterDirection.Output;
+
+                sqlComm.ExecuteNonQuery();
                 
+                LoginStatus.StatusMessage = sqlComm.Parameters["@status"].Value.ToString().Trim();
+                LoginStatus.ErrorMessage = sqlComm.Parameters["@errormessage"].Value.ToString().Trim();
+                              
             }
 
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-                User.Uid = dr["uid"].ToString();
-                User.Photo = dr["photo"].ToString();
-                User.FirstName = dr["Firstname"].ToString();
-                User.MiddleName = dr["middlename"].ToString();
-                User.LastName = dr["lastname"].ToString();
-                User.UserRole = dr["urole"].ToString();
-                User.ModuleCode = "ERP";
-                User.ModuleName = "ERP Home";
-                User.ModuleRoleCode = "Guest";
-                User.ModuleRoleTitle = "Guest User";
-
-                User.MobileNo = dr["mobileno"].ToString();
-                User.EmailID = dr["emailid"].ToString();
-                User.ProfEmailID = dr["profemailid"].ToString();
-               
-                User.DOB =Convert.ToDateTime(dr["Dob"].ToString()).ToString("dd MMM yyyy");
-                User.CategoryCast = dr["categorycast"].ToString();
-                User.Religion = dr["Religion"].ToString();
-                User.Gender = dr["Gender"].ToString();
-                User.Nationality = dr["Nationality"].ToString();
-                User.HandicapedBlind = dr["HandicapedBlind"].ToString();
-                User.PostalAddress = dr["PostalAddress"].ToString();
-                User.PermanantAddress = dr["PermanantAddress"].ToString();
-                User.Status = "success";
-                User.ErrorMessage = null;
-               
-            }
-            else
-            {
-                User = new UserClass();
-                User.Status = "failed";
-                User.ErrorMessage = "Invalid User Account.";
-            }
+           
+           
 
 
 
         }
         catch (Exception er)
         {
-
-            User.Status = "failed";
-            User.ErrorMessage = er.Message.ToString().Trim();
+            LoginStatus.StatusMessage = "Failed";
+            LoginStatus.ErrorMessage = er.Message.ToString().Trim();
 
         }
 
 
-        return User;
+        return LoginStatus;
 
     }
 
@@ -108,24 +83,27 @@ public class LoginClass
         MessageClass rm = new MessageClass();
         try
         {
-            ERPConnectionClass erpconn = new ERPConnectionClass();
+           // ERPConnectionClass erpconn = new ERPConnectionClass();
 
-            using (SqlConnection conn = erpconn.OpenConnection())
+            using (SqlConnection conn = ConnectionDB.OpenConnection())
             {
                 SqlCommand sqlComm = new SqlCommand("Proc_changepassword", conn);
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@username", UserName);
                 sqlComm.Parameters.AddWithValue("@OldPassword", Password);
                 sqlComm.Parameters.AddWithValue("@NewPassword", NewPassword);
-                sqlComm.Parameters.AddWithValue("@action", "Change");
+                sqlComm.Parameters.AddWithValue("@action", "Modify");
 
 
                 sqlComm.Parameters.Add("@rvalue", SqlDbType.Char, 500);
                 sqlComm.Parameters["@rvalue"].Direction = ParameterDirection.Output;
                 sqlComm.ExecuteNonQuery();
-               rm.SuccessMessage = (string)sqlComm.Parameters["@rvalue"].Value;
-                rm.Status = "success";
-
+               rm.StatusMessage = sqlComm.Parameters["@rvalue"].Value.ToString().Trim();
+                if (rm.StatusMessage.Equals("success"))
+                    rm.SuccessMessage = "Password Changed Successfull.";
+                else if (rm.StatusMessage.Equals("invalid user"))
+                    rm.ErrorMessage = "Authorization Failed";
+                
             }
 
           
@@ -135,7 +113,8 @@ public class LoginClass
         catch (Exception er)
         {
 
-           rm.Status = "failed";
+            rm.StatusMessage = "failed";
+            rm.SuccessMessage = "Password Not Changed.";
             rm.ErrorMessage = er.Message.ToString().Trim();
 
         }
