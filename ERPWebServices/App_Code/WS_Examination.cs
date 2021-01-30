@@ -1,4 +1,6 @@
 ﻿
+using Examination;
+using InstituteSetup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,26 +40,7 @@ public class WS_Examination : System.Web.Services.WebService
         return examList;
 
     }
-    [WebMethod]
-    public List<ExamSubjectsClass> GetExamCourse(string ExamID, string uid)
-    {
-        ExamSubjectsClass exSub = new ExamSubjectsClass();
-        List<ExamSubjectsClass> exsubjectList = new List<ExamSubjectsClass>();
-
-        try
-        {
-            exSub.ExamID = (String.IsNullOrEmpty(ExamID) ? "0" : ExamID);
-           
-            exsubjectList = exSub.GetExamSubject(uid);
-        }
-        catch (Exception er)
-        {
-            exsubjectList.Add(new ExamSubjectsClass { ErrorMessage = er.Message.ToString() });
-        }
-        return exsubjectList;
-
-    }
-
+  
   
 
 
@@ -68,16 +51,6 @@ public class WS_Examination : System.Web.Services.WebService
       
         MessageClass rm = new MessageClass();
         rm = examSchedule.UpdateExamSchedule(action);
-
-        return rm;
-
-    }
-    [WebMethod]
-    public MessageClass UpdateExamCourse(ExamSubjectsClass exSub, string action = "Insert")
-    {
-
-        MessageClass rm = new MessageClass();
-        rm = exSub.UpdateExamSubject(action);
 
         return rm;
 
