@@ -44,7 +44,7 @@ public class WS_UserManagement : System.Web.Services.WebService
     [WebMethod]
     public string GetModuleRole(string UserName, string ModuleCode="ERP")
     {
-
+        
         LoginClass Login = new LoginClass(UserName, ModuleCode);
         string MRole= UserModuleRoleClass.GetUserModuleRole(UserName,ModuleCode);
 
@@ -63,10 +63,15 @@ public class WS_UserManagement : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<PersonalClass> GetPersonalDetails(string UID = "ALL", string EmailID = "ALL", string Name = "ALL")
+    public List<PersonalClass> GetPersonalDetails(string UID,string EmailID,string Name)
     {
         PersonalClass pc = new PersonalClass();
         List<PersonalClass> personList = new List<PersonalClass>();
+
+        UID = (String.IsNullOrEmpty(UID)) ? "ALL" : UID;
+        EmailID = (String.IsNullOrEmpty(EmailID)) ? "ALL" : EmailID;
+        Name = (String.IsNullOrEmpty(Name)) ? "ALL" : Name;
+
         personList = pc.GetPersonalDetails(UID, EmailID, Name);
 
         return personList;
