@@ -1,6 +1,7 @@
 ﻿
 using Examination;
 using InstituteSetup;
+using Scheme;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ public class WS_Examination : System.Web.Services.WebService
    
    
     [WebMethod]
-    public List<ExamScheduleClass> GetExamSchedule(string ExamID)
+    public List<ExamScheduleClass> GetExamScheduleList(string ExamID)
     {
         ExamScheduleClass examClass = new ExamScheduleClass();
         List<ExamScheduleClass> examList = new List<ExamScheduleClass>();
@@ -40,9 +41,9 @@ public class WS_Examination : System.Web.Services.WebService
         return examList;
 
     }
-  
-  
 
+
+   
 
 
     [WebMethod]
@@ -55,5 +56,27 @@ public class WS_Examination : System.Web.Services.WebService
         return rm;
 
     }
-   
+
+    [WebMethod]
+    public MessageClass UpdateExamScheduleBulk(ExamScheduleClass pExamSchedule,List<ExamCourseScheduleClass> pExamCourseScheduleList, string action = "Insert")
+    {
+
+        MessageClass rm = new MessageClass();
+        rm = pExamSchedule.UpdateExamScheduleBulk(pExamCourseScheduleList,action);
+
+        return rm;
+
+    }
+
+    [WebMethod]
+    public MessageClass UpdateExamFormBulk(ExamFormClass pExamForm, List<CourseSchemeClass> pCourseList, string action = "Insert")
+    {
+
+        MessageClass rm = new MessageClass();
+        rm = pExamForm.UpdateExamForm(pCourseList, action);
+
+        return rm;
+
+    }
+
 }

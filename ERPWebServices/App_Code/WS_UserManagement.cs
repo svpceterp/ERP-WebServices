@@ -51,30 +51,18 @@ public class WS_UserManagement : System.Web.Services.WebService
         return MRole;
     }
 
+   
+
+  
     [WebMethod]
-    public MessageClass UpdatePersonalDetails(PersonalClass pc, string action = "Insert")
+    public UserSetupClass GetUserInfo(string UID)
     {
-        MessageClass rm = new MessageClass();
+        UserSetupClass u = new UserSetupClass();
+        u.GetUserDetails(UID);
 
-        rm = pc.UpdatePersonalDetails(action);
-
-        return rm;
+        return u;
 
     }
 
-    [WebMethod]
-    public List<PersonalClass> GetPersonalDetails(string UID,string EmailID,string Name)
-    {
-        PersonalClass pc = new PersonalClass();
-        List<PersonalClass> personList = new List<PersonalClass>();
 
-        UID = (String.IsNullOrEmpty(UID)) ? "ALL" : UID;
-        EmailID = (String.IsNullOrEmpty(EmailID)) ? "ALL" : EmailID;
-        Name = (String.IsNullOrEmpty(Name)) ? "ALL" : Name;
-
-        personList = pc.GetPersonalDetails(UID, EmailID, Name);
-
-        return personList;
-
-    }
 }
