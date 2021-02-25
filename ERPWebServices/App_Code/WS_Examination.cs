@@ -2,8 +2,10 @@
 using Examination;
 using InstituteSetup;
 using Scheme;
+using Student;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -42,9 +44,67 @@ public class WS_Examination : System.Web.Services.WebService
 
     }
 
+    [WebMethod]
+    public List<StudentClass> GetHallTicketStudentsByExamIDUID(string pExamID,string pUID)
+    {
+        ExamFormClass objExamForm = new ExamFormClass();
+        List<StudentClass> objStudentsList = new List<StudentClass>();
+        DataSet ds = new DataSet();
+        try
+        {
+            
+            ds = objExamForm.GetStudentHallTicketsByExamIDUID(pExamID,pUID);
 
-   
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                objStudentsList.Add(new StudentClass
+                {
+                    UID = dr["uid"].ToString(),
+                   StudentFullName = dr["Name"].ToString(),
+                   MobileNo = dr["mobileno"].ToString(),
+                   EmailID= dr["emailid"].ToString()
+                });
+            }
 
+        }
+        catch (Exception er)
+        {
+            objStudentsList.Add(new StudentClass { ErrorMessage = er.Message.ToString() });
+        }
+      return objStudentsList;
+
+    }
+
+    [WebMethod]
+    public List<ExamCourseScheduleClass> GetHallTicketSelectedCoursesByExamIDUID(string pExamID, string pUID)
+    {
+        ExamFormClass objExamForm = new ExamFormClass();
+        List<ExamCourseScheduleClass> objCourses = new List<ExamCourseScheduleClass>();
+        DataSet ds = new DataSet();
+        try
+        {
+
+            ds = objExamForm.GetStudentHallTicketsByExamIDUID(pExamID, pUID);
+
+            foreach (DataRow dr in ds.Tables[1].Rows)
+            {
+                objCourses.Add(new ExamCourseScheduleClass
+                {
+                    CourseCode = dr["CourseCode"].ToString(),
+                    CourseTitle = dr["CourseTitle"].ToString(),
+                    ExamCourseScheduleID = int.Parse(dr["ExamCourseScheduleID"].ToString())
+                   
+                });
+            }
+
+        }
+        catch (Exception er)
+        {
+            objCourses.Add(new ExamCourseScheduleClass { ErrorMessage = er.Message.ToString() });
+        }
+        return objCourses;
+
+    }
 
     [WebMethod]
     public MessageClass UpdateExamSchedule(ExamScheduleClass examSchedule, string action = "Insert")
