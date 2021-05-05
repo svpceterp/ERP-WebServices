@@ -1,14 +1,16 @@
 ﻿
-using Examination;
-using InstituteSetup;
-using Scheme;
-using Student;
+using nsManageCourseScheme;
+using nsManageExamination;
+using nsManageInstitute;
+using nsManageStudent;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+
 
 /// <summary>
 /// Summary description for WS_Examination
@@ -26,38 +28,38 @@ public class WS_Examination : System.Web.Services.WebService
    
    
     [WebMethod]
-    public List<ExamScheduleClass> GetExamScheduleList(string ExamID)
+    public List<clsExamSchedule> GetExamScheduleList(string ExamID)
     {
-        ExamScheduleClass examClass = new ExamScheduleClass();
-        List<ExamScheduleClass> examList = new List<ExamScheduleClass>();
+        clsExamSchedule examClass = new clsExamSchedule();
+        List<clsExamSchedule> examList = new List<clsExamSchedule>();
 
         try
         {
             examClass.ExamID = int.Parse((String.IsNullOrEmpty(ExamID) ? "0" : ExamID));
 
-            examList = examClass.GetExamSchedule();
+            examList = examClass.getExamSchedule();
         }
         catch(Exception er) {
-            examList.Add(new ExamScheduleClass { ErrorMessage = er.Message.ToString() });
+            examList.Add(new clsExamSchedule { ErrorMessage = er.Message.ToString() });
         }
         return examList;
 
     }
 
     [WebMethod]
-    public List<StudentClass> GetHallTicketStudentsByExamIDUID(string pExamID,string pUID)
+    public List<clsStudent> GetHallTicketStudentsByExamIDUID(string pExamID,string pUID)
     {
-        ExamFormClass objExamForm = new ExamFormClass();
-        List<StudentClass> objStudentsList = new List<StudentClass>();
-        DataSet ds = new DataSet();
+        clsExamForm objExamForm = new clsExamForm();
+        List<clsStudent> objStudentsList = new List<clsStudent>();
+        DataTable dt = new DataTable();
         try
         {
             
-            ds = objExamForm.GetStudentHallTicketsByExamIDUID(pExamID,pUID);
+            dt = objExamForm.getStudentHallTicketsByExamIDUID(pExamID,pUID);
 
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            foreach (DataRow dr in dt.Rows)
             {
-                objStudentsList.Add(new StudentClass
+                objStudentsList.Add(new clsStudent
                 {
                     UID = dr["uid"].ToString(),
                    StudentFullName = dr["Name"].ToString(),
@@ -69,26 +71,26 @@ public class WS_Examination : System.Web.Services.WebService
         }
         catch (Exception er)
         {
-            objStudentsList.Add(new StudentClass { ErrorMessage = er.Message.ToString() });
+            objStudentsList.Add(new clsStudent { ErrorMessage = er.Message.ToString() });
         }
       return objStudentsList;
 
     }
 
     [WebMethod]
-    public List<ExamCourseScheduleClass> GetHallTicketSelectedCoursesByExamIDUID(string pExamID, string pUID)
+    public List<clsExamCourseSchedule> GetHallTicketSelectedCoursesByExamIDUID(string pExamID, string pUID)
     {
-        ExamFormClass objExamForm = new ExamFormClass();
-        List<ExamCourseScheduleClass> objCourses = new List<ExamCourseScheduleClass>();
-        DataSet ds = new DataSet();
+        clsExamForm objExamForm = new clsExamForm();
+        List<clsExamCourseSchedule> objCourses = new List<clsExamCourseSchedule>();
+        DataTable dt = new DataTable();
         try
         {
 
-            ds = objExamForm.GetStudentHallTicketsByExamIDUID(pExamID, pUID);
+            dt = objExamForm.getStudentHallTicketsByExamIDUID(pExamID, pUID);
 
-            foreach (DataRow dr in ds.Tables[1].Rows)
+            foreach (DataRow dr in dt.Rows)
             {
-                objCourses.Add(new ExamCourseScheduleClass
+                objCourses.Add(new clsExamCourseSchedule
                 {
                     CourseCode = dr["CourseCode"].ToString(),
                     CourseTitle = dr["CourseTitle"].ToString(),
@@ -100,40 +102,40 @@ public class WS_Examination : System.Web.Services.WebService
         }
         catch (Exception er)
         {
-            objCourses.Add(new ExamCourseScheduleClass { ErrorMessage = er.Message.ToString() });
+            objCourses.Add(new clsExamCourseSchedule { ErrorMessage = er.Message.ToString() });
         }
         return objCourses;
 
     }
 
     [WebMethod]
-    public MessageClass UpdateExamSchedule(ExamScheduleClass examSchedule, string action = "Insert")
+    public clsMessage UpdateExamSchedule(clsExamSchedule examSchedule, string action = "Insert")
     {
       
-        MessageClass rm = new MessageClass();
-        rm = examSchedule.UpdateExamSchedule(action);
+        clsMessage rm = new clsMessage();
+        rm = examSchedule.updateExamSchedule(action);
 
         return rm;
 
     }
 
     [WebMethod]
-    public MessageClass UpdateExamScheduleBulk(ExamScheduleClass pExamSchedule,List<ExamCourseScheduleClass> pExamCourseScheduleList, string action = "Insert")
+    public clsMessage UpdateExamScheduleBulk(clsExamSchedule pExamSchedule,List<clsExamCourseSchedule> pExamCourseScheduleList, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = pExamSchedule.UpdateExamScheduleBulk(pExamCourseScheduleList,action);
+        clsMessage rm = new clsMessage();
+        rm = pExamSchedule.updateExamScheduleBulk(pExamCourseScheduleList,action);
 
         return rm;
 
     }
 
     [WebMethod]
-    public MessageClass UpdateExamFormBulk(ExamFormClass pExamForm, List<CourseSchemeClass> pCourseList, string action = "Insert")
+    public clsMessage UpdateExamFormBulk(clsExamForm pExamForm, List<clsCourseScheme> pCourseList, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = pExamForm.UpdateExamForm(pCourseList, action);
+        clsMessage rm = new clsMessage();
+        rm = pExamForm.updateExamForm(pCourseList, action);
 
         return rm;
 

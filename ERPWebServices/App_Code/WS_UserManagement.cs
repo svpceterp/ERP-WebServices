@@ -1,4 +1,6 @@
-﻿using InstituteSetup;
+﻿
+using nsManageInstitute;
+using nsManageUser;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using UserManagement;
+
 
 /// <summary>
 /// Summary description for WS_UserLogin
@@ -20,23 +22,23 @@ public class WS_UserManagement : System.Web.Services.WebService
 {
 
     [WebMethod]
-    public MessageClass CheckLogin(string UserName, string Password)
+    public clsMessage CheckLogin(string UserName, string Password)
     {
-        MessageClass status = new MessageClass();
+        clsMessage status = new clsMessage();
 
-        LoginClass Login = new LoginClass(UserName, Password);
-        status = Login.CheckLogin();
-
-            
+        clsLogin Login = new clsLogin();
+        status = Login.checkLogin(UserName,Password);
+                   
         return status;
     }
 
     [WebMethod]
-    public  MessageClass ChangePassword(string Uname,string OldPassword,string NewPassword)
+    public  clsMessage ChangePassword(string Uname,string OldPassword,string NewPassword)
     {
-        MessageClass rm = new MessageClass();
-        LoginClass Login = new LoginClass(Uname,OldPassword,NewPassword);
-        rm = Login.ChangePassword();
+        clsMessage rm = new clsMessage();
+        clsLogin Login = new clsLogin();
+       
+        rm = Login.changePassword(Uname,OldPassword,NewPassword);
 
         return rm;
     }
@@ -44,9 +46,8 @@ public class WS_UserManagement : System.Web.Services.WebService
     [WebMethod]
     public string GetModuleRole(string UserName, string ModuleCode="ERP")
     {
-        
-        LoginClass Login = new LoginClass(UserName, ModuleCode);
-        string MRole= UserModuleRoleClass.GetUserModuleRole(UserName,ModuleCode);
+           
+        string MRole= clsUserModuleRole.GetUserModuleRole(UserName,ModuleCode);
 
         return MRole;
     }
@@ -55,10 +56,10 @@ public class WS_UserManagement : System.Web.Services.WebService
 
   
     [WebMethod]
-    public UserSetupClass GetUserInfo(string UID)
+    public clsManageUser GetUserInfo(string UID)
     {
-        UserSetupClass u = new UserSetupClass();
-        u.GetUserDetails(UID);
+        clsManageUser u = new clsManageUser();
+        u.getPersonalDetails(UID);
 
         return u;
 

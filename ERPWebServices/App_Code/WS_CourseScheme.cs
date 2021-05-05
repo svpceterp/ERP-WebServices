@@ -1,10 +1,7 @@
-﻿
-using InstituteSetup;
-using Scheme;
+﻿using nsManageCourseScheme;
+using nsManageInstitute;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
 
 /// <summary>
@@ -17,20 +14,23 @@ using System.Web.Services;
 public class WS_CourseScheme : System.Web.Services.WebService
 {
     [WebMethod (MessageName ="GetCourseCategoryByID")]
-    public List<CourseCategoryClass> GetCourseCategory(int CourseCategoryID)
+    public List<clsCourseCategory> GetCourseCategory(string CourseCategoryID)
     {
-        CourseCategoryClass sClass = new CourseCategoryClass();
-        List<CourseCategoryClass> CatList = new List<CourseCategoryClass>();
+        clsCourseCategory sClass = new clsCourseCategory();
+        List<clsCourseCategory> CatList = new List<clsCourseCategory>();
         try
         {
-          
-            sClass.CourseCategoryID = CourseCategoryID;
 
-            CatList = sClass.GetCourseCategory();
+            if (!string.IsNullOrEmpty(CourseCategoryID))
+                sClass.CourseCategoryID = int.Parse(CourseCategoryID);
+            else
+                sClass.CourseCategoryID = 0;
+
+            CatList = sClass.getCourseCategories();
         }
         catch (Exception er)
         {
-            CatList.Add(new CourseCategoryClass { ErrorMessage = er.Message.ToString() });
+            CatList.Add(new clsCourseCategory { ErrorMessage = er.Message.ToString() });
         }
         return CatList;
 
@@ -38,18 +38,18 @@ public class WS_CourseScheme : System.Web.Services.WebService
 
 
     [WebMethod(MessageName = "GetCourseCategoryWithOutID")]
-    public List<CourseCategoryClass> GetCourseCategory()
+    public List<clsCourseCategory> GetCourseCategory()
     {
-        CourseCategoryClass sClass = new CourseCategoryClass();
-        List<CourseCategoryClass> CatList = new List<CourseCategoryClass>();
+        clsCourseCategory sClass = new clsCourseCategory();
+        List<clsCourseCategory> CatList = new List<clsCourseCategory>();
         try
         {
             sClass.CourseCategoryID =0;
-            CatList = sClass.GetCourseCategory();
+            CatList = sClass.getCourseCategories();
         }
         catch (Exception er)
         {
-            CatList.Add(new CourseCategoryClass { ErrorMessage = er.Message.ToString() });
+            CatList.Add(new clsCourseCategory { ErrorMessage = er.Message.ToString() });
         }
         return CatList;
 
@@ -58,11 +58,11 @@ public class WS_CourseScheme : System.Web.Services.WebService
 
 
     [WebMethod]
-    public MessageClass UpdateCourseCategory(CourseCategoryClass objCourseCategory, string action = "Insert")
+    public clsMessage UpdateCourseCategory(clsCourseCategory objCourseCategory, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = objCourseCategory.UpdateCourseCategory(action);
+        clsMessage rm = new clsMessage();
+        rm = objCourseCategory.updateCourseCategory(action);
 
         return rm;
 
@@ -70,21 +70,21 @@ public class WS_CourseScheme : System.Web.Services.WebService
 
 
     [WebMethod(MessageName = "GetCourseSchemeByID")]
-    public List<CourseSchemeClass> GetCourseScheme(int CourseID,int ProgramID)
+    public List<clsCourseScheme> GetCourseScheme(int CourseID,int ProgramID)
     {
 
-        CourseSchemeClass courseClass = new CourseSchemeClass();
-        List<CourseSchemeClass> courseList = new List<CourseSchemeClass>();
+        clsCourseScheme courseClass = new clsCourseScheme();
+        List<clsCourseScheme> courseList = new List<clsCourseScheme>();
 
         try
         {
             courseClass.CourseID = CourseID;
             courseClass.ProgramID = ProgramID;
-            courseList = courseClass.GetCourseScheme();
+            courseList = courseClass.getCourseSchemes();
         }
         catch (Exception er)
         {
-            courseList.Add(new CourseSchemeClass { ErrorMessage = er.Message.ToString() });
+            courseList.Add(new clsCourseScheme { ErrorMessage = er.Message.ToString() });
 
         }
         return courseList;
@@ -92,21 +92,21 @@ public class WS_CourseScheme : System.Web.Services.WebService
     }
 
     [WebMethod(MessageName = "GetCourseSchemeWithOutID")]
-    public List<CourseSchemeClass> GetCourseScheme()
+    public List<clsCourseScheme> GetCourseScheme()
     {
 
-        CourseSchemeClass courseClass = new CourseSchemeClass();
-        List<CourseSchemeClass> courseList = new List<CourseSchemeClass>();
+        clsCourseScheme courseClass = new clsCourseScheme();
+        List<clsCourseScheme> courseList = new List<clsCourseScheme>();
 
         try
         {
             courseClass.CourseID = 0;
             courseClass.ProgramID = 0;
-            courseList = courseClass.GetCourseScheme();
+            courseList = courseClass.getCourseSchemes();
         }
         catch (Exception er)
         {
-            courseList.Add(new CourseSchemeClass { ErrorMessage = er.Message.ToString() });
+            courseList.Add(new clsCourseScheme { ErrorMessage = er.Message.ToString() });
 
         }
         return courseList;
@@ -114,10 +114,10 @@ public class WS_CourseScheme : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public MessageClass UpdateCourseScheme(CourseSchemeClass objCourseScheme, string action = "Insert")
+    public clsMessage UpdateCourseScheme(clsCourseScheme objCourseScheme, string action = "Insert")
     {
-        MessageClass rm = new MessageClass();
-        rm = objCourseScheme.UpdateCourseScheme(action);
+        clsMessage rm = new clsMessage();
+        rm = objCourseScheme.updateCourseScheme(action);
 
         return rm;
 

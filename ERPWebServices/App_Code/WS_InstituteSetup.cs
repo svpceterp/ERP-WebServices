@@ -1,10 +1,8 @@
-﻿
-using InstituteSetup;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
+using nsManageInstitute;
+
 
 /// <summary>
 /// Summary description for WS_ERPMaster
@@ -17,11 +15,11 @@ using System.Web.Services;
 public class WS_InstituteSetup : System.Web.Services.WebService
 {
     [WebMethod]
-    public List<DepartmentClass> GetDepartment(string departmentID)
+    public List<clsDepartment> GetDepartment(string departmentID)
     {
-        MessageClass ec = new MessageClass();
-        DepartmentClass dClass = new DepartmentClass();
-        List<DepartmentClass> deptList = new List<DepartmentClass>();
+        clsMessage ec = new clsMessage();
+        clsDepartment dClass = new clsDepartment();
+        List<clsDepartment> deptList = new List<clsDepartment>();
 
         try
         {
@@ -30,24 +28,24 @@ public class WS_InstituteSetup : System.Web.Services.WebService
 
 
             dClass.DepartmentID = id;
-            
-            deptList = dClass.GetDepartment();
+
+            deptList = dClass.getDepartments();
 
         }
         catch (Exception er)
         {
 
-            deptList.Add(new DepartmentClass { ErrorMessage = er.Message.ToString() });
+            deptList.Add(new clsDepartment { ErrorMessage = er.Message.ToString() });
 
         }
         return deptList;
 
     }
     [WebMethod]
-    public List<SemesterClass> GetSemester(string semesterID)
+    public List<clsSemester> GetSemester(string semesterID)
     {
-        SemesterClass sClass = new SemesterClass();
-        List<SemesterClass> semList = new List<SemesterClass>();
+        clsSemester sClass = new clsSemester();
+        List<clsSemester> semList = new List<clsSemester>();
         try
         {
             int id = 0;
@@ -55,11 +53,11 @@ public class WS_InstituteSetup : System.Web.Services.WebService
 
            sClass.SemesterID = id;
 
-            semList = sClass.GetSemester();
+            semList = sClass.getSemesters();
         }
         catch (Exception er)
         {
-            semList.Add(new SemesterClass { ErrorMessage = er.Message.ToString() });
+            semList.Add(new clsSemester { ErrorMessage = er.Message.ToString() });
         }
         return semList;
 
@@ -67,21 +65,21 @@ public class WS_InstituteSetup : System.Web.Services.WebService
    
 
     [WebMethod]
-    public List<ProgramClass> GetProgram(string programID)
+    public List<clsProgram> GetProgram(string programID)
     {
-        ProgramClass pClass = new ProgramClass();
-        List<ProgramClass> programList = new List<ProgramClass>();
+        clsProgram pClass = new clsProgram();
+        List<clsProgram> programList = new List<clsProgram>();
         try
         {
             int id = 0;
             bool b = int.TryParse(programID, out id);
             pClass.ProgramID = id;
 
-            programList = pClass.GetProgram();
+            programList = pClass.getPrograms();
         }
         catch (Exception er)
         {
-            programList.Add(new ProgramClass { ErrorMessage = er.Message.ToString() });
+            programList.Add(new clsProgram { ErrorMessage = er.Message.ToString() });
         }
         return programList;
 
@@ -89,40 +87,40 @@ public class WS_InstituteSetup : System.Web.Services.WebService
 
   
     [WebMethod]
-    public List<CountryClass> GetCountry()
+    public List<clsCountry> GetCountry()
     {
-        CountryClass countryClass = new CountryClass();
-        List<CountryClass> countryNameList = new List<CountryClass>();
-        countryNameList = countryClass.GetCountry();
+        clsCountry countryClass = new clsCountry();
+        List<clsCountry> countryNameList = new List<clsCountry>();
+        countryNameList = countryClass.getCountries();
 
         return countryNameList;
 
     }
     [WebMethod]
-    public List<StateClass> GetState(string countryCode)
+    public List<clsState> GetState(string countryCode)
     {
-        StateClass stateClass = new StateClass();
-        List<StateClass> stateNameList = new List<StateClass>();
+        clsState stateClass = new clsState();
+        List<clsState> stateNameList = new List<clsState>();
 
-        if (countryCode.Length == 0)
+        if (string.IsNullOrEmpty(countryCode))
             countryCode = "ALL";
 
-        stateNameList = stateClass.GetState(countryCode);
+        stateNameList = stateClass.getStates(countryCode);
 
         return stateNameList;
 
     }
     [WebMethod]
-    public List<InstituteClass> GetInstitute(string instituteID)
+    public List<clsInstitute> GetInstitute(string instituteID)
     {
-        InstituteClass Inst = new InstituteClass();
-        List<InstituteClass> InstList = new List<InstituteClass>();
+        clsInstitute Inst = new clsInstitute();
+        List<clsInstitute> InstList = new List<clsInstitute>();
 
         int id = 0;
         bool b = int.TryParse(instituteID, out id);
 
         Inst.InstituteID = id;
-        InstList = Inst.GetInstitute();
+        InstList = Inst.getInstitutes();
 
         return InstList;
 
@@ -131,21 +129,21 @@ public class WS_InstituteSetup : System.Web.Services.WebService
    
 
     [WebMethod]
-    public MessageClass UpdateDepartment(DepartmentClass dept, string action = "Insert")
+    public clsMessage UpdateDepartment(clsDepartment dept, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = dept.UpdateDepartment(action);
+        clsMessage rm = new clsMessage();
+        rm = dept.updateDepartment(action);
 
         return rm;
 
     }
     [WebMethod]
-    public MessageClass UpdateInstitute(InstituteClass Inst, string action = "Insert")
+    public clsMessage UpdateInstitute(clsInstitute Inst, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = Inst.UpdateInstitute(action);
+        clsMessage rm = new clsMessage();
+        rm = Inst.updateInstitute(action);
 
         return rm;
 

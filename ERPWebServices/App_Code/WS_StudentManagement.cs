@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using Student;
-using Scheme;
-using InstituteSetup;
+
+using nsManageInstitute;
+using nsManageStudent;
+using nsManageCourseScheme;
 /// <summary>
 /// Summary description for WS_StudentManagement
 /// </summary>
@@ -18,11 +19,12 @@ public class WS_StudentManagement : System.Web.Services.WebService
 {
 
 
-    StudentCourseRegistrationClass stregcourse = new StudentCourseRegistrationClass();
+   
 
     [WebMethod]
-    public List<CourseSchemeClass> GetStudentResgisteredCourses(string StudRegID,string uid,string programID,string semesterID)
+    public List<clsCourseScheme> GetStudentResgisteredCourses(string StudRegID,string uid,string programID,string semesterID)
      {
+        clsStudentCourseRegistration stregcourse = new clsStudentCourseRegistration();
         int pID = 0;
         bool b = false;
         int sID = 0;
@@ -36,34 +38,33 @@ public class WS_StudentManagement : System.Web.Services.WebService
         if (uid.Length == 0)
             uid = "ALL";
 
-       
-        stregcourse.StudentCourseRegID = studID;
         stregcourse.UID = uid;
-        stregcourse.ProgramID = pID;
-        stregcourse.SemesterID = sID;
+      
 
 
-        List<CourseSchemeClass> studentCoursesList = new List<CourseSchemeClass>();
-        studentCoursesList=stregcourse.GetStudentCourseRegistration();
+        List<clsCourseScheme> studentCoursesList = new List<clsCourseScheme>();
+        studentCoursesList=stregcourse.getStudentCourseRegistration();
         return studentCoursesList;
     }
     [WebMethod]
-    public MessageClass UpdateStudentCourseRegistration(string pUID,string pCourseID,string action = "Insert")
+    public clsMessage UpdateStudentCourseRegistration(string pUID,string pCourseID,string action = "Insert")
     {
-
-        MessageClass rm = new MessageClass();
+        clsStudentCourseRegistration stregcourse = new clsStudentCourseRegistration();
+        clsMessage rm = new clsMessage();
         stregcourse.UID = pUID;
         stregcourse.CourseID = int.Parse(pCourseID);
-        rm =stregcourse.UpdateStudentCourseRegistration(action);
+        rm =stregcourse.updateStudentCourseRegistration(action);
 
         return rm;
 
     }
-    public MessageClass UpdateStudentCourseRegistrationBulk(StudentCourseRegistrationClass pstudentRegCourse,List<CourseSchemeClass> pCourseList, string action = "Insert")
+    [WebMethod]
+    public clsMessage UpdateStudentCourseRegistrationBulk(clsStudentCourseRegistration studCourseReg ,clsManageInstitute Inst,List<string> pCourseList, string action = "Insert")
     {
 
-        MessageClass rm = new MessageClass();
-        rm = pstudentRegCourse.UpdateStudentCourseRegistrationBulk(pCourseList,action);
+        clsMessage rm = new clsMessage();
+       
+        rm = studCourseReg.updateStudentCourseRegistrationBulk(Inst,pCourseList,action);
 
         return rm;
 
